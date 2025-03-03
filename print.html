@@ -187,17 +187,17 @@
 <p>除了AI时代放大了Node全栈外，Node.js自身的发展也到了一个必须要总结的时间点了。目前市面上的书、文章、课程主要是Node.js 8以前的（不知道朴灵的深入浅出2能否有突破），现在已经是Node.js v20了。Node.js v20里的很多新特性，比如下面是我觉得比较重要的一些。</p>
 <h2 id="nodejs-v20的新特性"><a class="header" href="#nodejs-v20的新特性">Node.js v20的新特性</a></h2>
 <ul>
-<li><a href="prepreface.html#">V8(5.8→11.3) eventloop promise-base api（error-first） event npm</a></li>
-<li><a href="prepreface.html#">ESM</a></li>
-<li><a href="prepreface.html#">async/await + promise + hooks</a></li>
-<li><a href="prepreface.html#">worker thread（tinypool）</a></li>
-<li><a href="prepreface.html#">loader、network-import</a></li>
-<li><a href="prepreface.html#">test runner</a></li>
-<li><a href="prepreface.html#">权限模型</a></li>
-<li><a href="prepreface.html#">可观测性，包括 logging/metrics/tracing，以及 APM 等</a></li>
-<li><a href="prepreface.html#">现代化的 HTTP：undici</a></li>
-<li><a href="prepreface.html#">WASM</a></li>
-<li><a href="prepreface.html#">N-API</a></li>
+<li><a href="https://nodejs.cn/en/learn/asynchronous-work/event-loop-timers-and-nexttick">V8(5.8→11.3) eventloop promise-base api（error-first） event npm</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/esm.html#%E6%A8%A1%E5%9D%97ecmascript-%E6%A8%A1%E5%9D%97">ESM</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/async_hooks.html#%E5%BC%82%E6%AD%A5%E9%92%A9%E5%AD%90">async/await + promise + hooks</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/worker_threads.html#worker-threads">worker thread（tinypool）</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/module.html#import-from-https">loader、network-import</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/test.html#test-runner">test runner</a></li>
+<li><a href="https://nodejs.cn/docs/latest-v22.x/api/permissions.html#%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B">权限模型</a></li>
+<li><a href="https://nodejs.cn/api/util.html">可观测性，包括 logging/metrics/tracing，以及 APM 等</a></li>
+<li><a href="https://undici.nodejs.org/#/">现代化的 HTTP：undici</a></li>
+<li><a href="https://nodejs.cn/en/learn/getting-started/nodejs-with-webassembly">WASM</a></li>
+<li><a href="https://nodejs.cn/api/n-api.html">N-API</a></li>
 </ul>
 <p>除了第一条没变外，其他的差异还是蛮大的。差异如此大，目前还没有课程能够系统的进行讲解，这是我觉得非常可惜的，所以本课程后续也会持续的完善。</p>
 <p>Node.js对比Deno，Deno基本上没有啥绝对优势，至于Bun.js还需要观望，按照现在的思路很难能突破Node.js的应用范围。</p>
@@ -233,7 +233,7 @@
 <li>让读者了解核心ESM模块和内置的测试框架用法。</li>
 <li>讲清楚TypeScript改写ESM编码之后带来的变化，以及TSC、TSX、TSUP、TSD工具使用。</li>
 <li>工程实践，从HelloWorld到Monorepo，覆盖开发、调试、测试、发布全流程</li>
-<li>知识面延展，比如ESBuild、Bundless等。</li>
+<li>知识面延展，比如ESBuild、Boundless等。</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="1hello-nodejs-v20"><a class="header" href="#1hello-nodejs-v20">1、Hello Node.js v20</a></h1>
 <p>市面上的Node.js书籍绝大部分是Node.js 8版本以前的，而现在最新的Node.js版本是v20。从Node.js 8到Node.js v20，整整12个版本，从2017到2023，整整6年时间里，变化是极大的。</p>
@@ -620,7 +620,7 @@ try {
 ✅ Tips3：Node.js里最好是都按照异步思维来思考和编写。不然就会出现同步一时爽，线上火葬场。
 </aside>
 <h2 id="promise"><a class="header" href="#promise">Promise</a></h2>
-<p>Promise是JS异步编程中的重要概念，异步抽象处理对象，是目前比较流行Javascript异步编程解决方案之一。在Node.js世界里，本身是Error-first Callback写法，和Promise结合是最简单的用法。所以在Node.js 10之前，基本上都会使用bluebird这样的Promise库来实现，后面ES6内置Promise，所以Node.js（基于v8内核，v8是Chrome的js渲染引擎）也开始支持Promisee对象，并且对fs等模块进行了Promise话，甚至还出现了<code>util.promisify</code>这样的工具函数。</p>
+<p>Promise是JS异步编程中的重要概念，异步抽象处理对象，是目前比较流行Javascript异步编程解决方案之一。在Node.js世界里，本身是Error-first Callback写法，和Promise结合是最简单的用法。所以在Node.js 10之前，基本上都会使用bluebird这样的Promise库来实现，后面ES6内置Promise，所以Node.js（基于v8内核，v8是Chrome的js渲染引擎）也开始支持Promise对象，并且对fs等模块进行了Promise化，甚至还出现了<code>util.promisify</code>这样的工具函数。</p>
 <h3 id="es6-promise"><a class="header" href="#es6-promise">ES6 Promise</a></h3>
 <p>ES6引入了Promise对象，它是一种用于处理异步操作的对象。Promise可以将异步操作转化为类似同步操作的链式调用方式，使得代码更易读、更易维护。</p>
 <p>Promise对象具有以下特点：</p>
@@ -1086,14 +1086,27 @@ main();
 </ol>
 <p>总之，Node.js在大前端中的应用非常广泛，可以帮助开发者快速搭建服务器、构建前端、实现自动化构建、进行实时通信、操作数据库、开发人工智能等。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="12nodejs安装"><a class="header" href="#12nodejs安装">1.2、Node.js安装</a></h1>
-<p>这部分将介绍使用 Volta 来管理 Node.js 环境。Volta 是一个现代化的 JavaScript 工具管理器，提供了比传统 nvm 更好的性能和用户体验。</p>
+<p>这部分将介绍使用 Volta 来管理 Node.js 环境。Volta 是一个现代化的 JavaScript 工具管理器，提供了比传统 nvm 更好的性能和用户体验。通过使用 Volta 管理项目级别的 Node.js 版本，可以确保每个项目都有一个干净且独立的开发环境。</p>
 <h2 id="volta"><a class="header" href="#volta"><a href="https://volta.sh/" target="_blank" rel="noopener noreferrer">Volta</a></a></h2>
 <p>Volta 是用 Rust 编写的 JavaScript 工具管理器，具有以下特点：</p>
 <ul>
 <li>快速且可靠：基于 Rust 实现，性能优异</li>
 <li>项目智能：自动检测并切换到项目所需的 Node.js 版本</li>
 <li>跨平台：支持 Windows、macOS 和 Linux</li>
+<li>管理包管理器（npm、yarn、pnpm）的版本</li>
+<li>支持管理全局工具的特定版本</li>
 </ul>
+<p>总的来说，Volta 提供了更现代化、更自动化的 Node.js 版本管理体验，特别适合团队协作和需要频繁切换项目的场景。</p>
+<pre><code class="language-bash"># NVM 需要手动切换版本
+nvm use 22
+
+# Volta 自动检测项目版本
+cd my-project  # 自动切换到项目指定的版本
+
+# Volta 固定项目版本
+volta pin node@22
+
+</code></pre>
 <h3 id="安装步骤"><a class="header" href="#安装步骤">安装步骤</a></h3>
 <p>Unix-like 系统（macOS、Linux）：</p>
 <pre><code class="language-bash">curl https://get.volta.sh | bash
@@ -1104,17 +1117,26 @@ main();
 </ul>
 <h3 id="基本使用"><a class="header" href="#基本使用">基本使用</a></h3>
 <pre><code class="language-bash"># 安装 Node.js
-volta install node@16
+volta install node@lts
 
-# 设置项目 Node.js 版本
-volta pin node@16
+# 设置项目 Node.js 版本, 将项目的运行时或包管理器设置为指定的版本
+volta pin node@lts
 
 # 安装包管理器
-volta install npm@8
-volta install yarn@1.22
+volta install npm@lts
+volta install yarn@lts
 
 # 查看当前工具版本
 volta list
+
+# 仅下载 node 到本地不安装
+volta fetch node@lts
+
+# 查看已经安装的 node 版本列表
+volta list node
+
+# 查看 node 安装路径
+volta which node
 
 </code></pre>
 <pre><code class="language-bash">
@@ -1166,7 +1188,9 @@ Options:
 </ol>
 <p>总的来说，Node.js Corepack是一个方便、可靠的工具，可以帮助开发者更好地管理和使用Node.js核心模块。它简化了安装和更新的过程，提供了版本管理和快速下载的功能，同时保证了核心模块的可靠性和安全性。</p>
 <p>Corepack目前还不是默认开启的功能，暂时先了解就可以了。</p>
-<h2 id="nrmnode-registry-management-1"><a class="header" href="#nrmnode-registry-management-1">nrm（node registry management）</a></h2>
+<h2 id="npm-registry"><a class="header" href="#npm-registry">npm registry</a></h2>
+<p>npm registry 是 npm 的源，用于存储和分发 npm 包。</p>
+<p>npm 的源有多种，包括官方源、国内源、私有源等。</p>
 <ul>
 <li><a href="https://www.npmjs.com/">https://www.npmjs.com/</a>  官方源。</li>
 <li><a href="https://npmmirror.com/">https://npmmirror.com/</a> 国内源，之前叫cnpm。</li>
@@ -1177,7 +1201,25 @@ Options:
 <li>内网安装会比外网快。能在内网使用cnpm搭建一个npm私有源，就尽量用。</li>
 </ul>
 <p>无论哪种情况，我们都需要切换npm源。</p>
-<p>安装</p>
+<h2 id="使用-volta-管理-npm-registry"><a class="header" href="#使用-volta-管理-npm-registry">使用 volta 管理 npm registry</a></h2>
+<pre><code class="language-bash"># 直接使用 npm config 命令 设置 npm registry 
+volta run npm config set registry https://registry.npmmirror.com/
+
+# 查看当前 registry
+volta run npm config get registry
+
+# 临时使用其他源
+volta run npm install package-name --registry=https://registry.npmmirror.com/
+</code></pre>
+<h2 id="使用-npmrc-文件推荐可以版本控制"><a class="header" href="#使用-npmrc-文件推荐可以版本控制">使用 .npmrc 文件（推荐，可以版本控制）：</a></h2>
+<pre><code class="language-bash"># 在项目根目录创建 .npmrc 文件
+echo &quot;registry=https://registry.npmmirror.com/&quot; &gt; .npmrc
+
+# 或者在用户目录创建全局配置
+echo &quot;registry=https://registry.npmmirror.com/&quot; &gt; ~/.npmrc
+</code></pre>
+<h2 id="nrmnode-registry-management适合频繁切换源"><a class="header" href="#nrmnode-registry-management适合频繁切换源">nrm（node registry management）（适合频繁切换源）</a></h2>
+<p>安装 </p>
 <pre><code class="language-bash">$ npm install -g nrm
 </code></pre>
 <p>查看支持的源</p>
@@ -1193,9 +1235,28 @@ Options:
 <p>切换源</p>
 <pre><code class="language-bash">$ nrm use cnpm  //switch registry to cnpm
 
-    Registry has been set to: http://r.cnpmjs.org/
+  Registry has been set to: http://r.cnpmjs.org/
 
 </code></pre>
+<h2 id="使用-verdaccio适合搭建私有源"><a class="header" href="#使用-verdaccio适合搭建私有源">使用 Verdaccio（适合搭建私有源）：</a></h2>
+<p>可以搭建私有 npm 源
+支持缓存公共包
+可以发布私有包</p>
+<h2 id="选择建议"><a class="header" href="#选择建议">选择建议</a></h2>
+<ol>
+<li>如果是个人开发：
+直接使用 npm config 命令或 .npmrc 文件就够用了
+简单且不需要安装额外工具</li>
+<li>如果经常需要切换源：
+可以考虑使用 nrm
+提供了便捷的源管理和切换功能</li>
+<li>如果是企业开发：
+建议搭建 Verdaccio 私有源
+可以更好地管理私有包和缓存</li>
+<li>如果是项目配置：
+推荐使用 .npmrc 文件
+可以随代码版本控制，确保团队使用相同的配置</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="13esm"><a class="header" href="#13esm">1.3、ESM</a></h1>
 <p>当下前端主流用法是基于ESM方式进行编写，Node.js v20已经非常好的支持ESM了，推荐大家使用这种方式进行编写。</p>
 <p>为了能够让大家理解ESM前世今生，本节我们也花了一点时间了解模块规范演进历史和必须了解的CommonJS，最后给出了现在Node.js里最常用的引用写法。</p>
@@ -1418,7 +1479,7 @@ try {
 ✅ Tips3：Node.js里最好是都按照异步思维来思考和编写。不然就会出现同步一时爽，线上火葬场。
 </aside>
 <h2 id="promise-1"><a class="header" href="#promise-1">Promise</a></h2>
-<p>Promise是JS异步编程中的重要概念，异步抽象处理对象，是目前比较流行Javascript异步编程解决方案之一。在Node.js世界里，本身是Error-first Callback写法，和Promise结合是最简单的用法。所以在Node.js 10之前，基本上都会使用bluebird这样的Promise库来实现，后面ES6内置Promise，所以Node.js（基于v8内核，v8是Chrome的js渲染引擎）也开始支持Promisee对象，并且对fs等模块进行了Promise话，甚至还出现了<code>util.promisify</code>这样的工具函数。</p>
+<p>Promise是JS异步编程中的重要概念，异步抽象处理对象，是目前比较流行Javascript异步编程解决方案之一。在Node.js世界里，本身是Error-first Callback写法，和Promise结合是最简单的用法。所以在Node.js 10之前，基本上都会使用bluebird这样的Promise库来实现，后面ES6内置Promise，所以Node.js（基于v8内核，v8是Chrome的js渲染引擎）也开始支持Promise对象，并且对fs等模块进行了Promise化，甚至还出现了<code>util.promisify</code>这样的工具函数。</p>
 <h3 id="es6-promise-1"><a class="header" href="#es6-promise-1">ES6 Promise</a></h3>
 <p>ES6引入了Promise对象，它是一种用于处理异步操作的对象。Promise可以将异步操作转化为类似同步操作的链式调用方式，使得代码更易读、更易维护。</p>
 <p>Promise对象具有以下特点：</p>
@@ -1555,7 +1616,7 @@ main();
 <p>通过npm init -y创建项目</p>
 <p><img src="1/img/Untitled%209.png" alt="Untitled" /></p>
 <p>这是npm默认创建的package.json，此时并没有配置ES模块信息。需要手动编写，增加&quot;type&quot;: &quot;module&quot;。此时，package.json文件内容如下。</p>
-<pre><code class="language-bash">{
+<pre><code class="language-json">{
   &quot;name&quot;: &quot;helloworld&quot;,
   &quot;version&quot;: &quot;1.0.0&quot;,
   &quot;description&quot;: &quot;&quot;,
@@ -1571,7 +1632,7 @@ main();
 </code></pre>
 <h2 id="创建indexjs-1"><a class="header" href="#创建indexjs-1">创建index.js</a></h2>
 <p>为了演示方便，我们采用之前的代码。</p>
-<pre><code class="language-bash">// 定义一个异步函数
+<pre><code class="language-javascript">// 定义一个异步函数
 async function sayHi(name) {
   try {
     // 调用Promise函数
@@ -1608,7 +1669,7 @@ sayHi(person);
 <p>前置条件是npmjs.com上注册并登录.</p>
 <p><img src="1/img/Untitled%2010.png" alt="Untitled" /></p>
 <p>修改package.json如下</p>
-<pre><code class="language-bash">{
+<pre><code class="language-json">{
   &quot;name&quot;: &quot;node-v20-helloworld&quot;,
   &quot;version&quot;: &quot;1.0.5&quot;,
   &quot;description&quot;: &quot;&quot;,
@@ -1653,9 +1714,8 @@ v1.0.6
 </div>
 <p>Node.js遵循与JavaScript本身相同的&quot;最小核心&quot;原则。因此，像代码检查工具、代码格式化工具和测试运行器这样的工具最好作为第三方工具提供。虽然这是一个很好的想法很长一段时间，但现在没有标准测试工具的任何语言都显得有些奇怪。Deno、Rust和Go - 它们都有自己内置的测试运行器。</p>
 <p>在Node.js v18开始内置了测试框架，在Node.js v20版本中，已经被标记为Stable能力，大家可以放心使用。</p>
-<p>使用Node.js 内置的测试框架，测试代码如下。</p>
-<pre><code class="language-bash">
-import { test } from &quot;node:test&quot;;
+<p>我们可以创建一个<code>index.test.js</code>文件，文件里的测试代码如下。</p>
+<pre><code class="language-javascript">import { test } from &quot;node:test&quot;;
 import assert from &quot;node:assert&quot;;
 
 import { sayHi } from &quot;./index.js&quot;;
@@ -1670,12 +1730,18 @@ test(&quot;test if works correctly&quot;, function (t) {
   assert.strictEqual(log.mock.callCount(), 1);
 });
 </code></pre>
+<p>由于我们在测试代码文件引入了<code>index.js</code>中的<code>sayHi</code>，因此要在<code>index.js</code>文件中给该函数加上<code>export</code></p>
+<pre><code class="language-javascript">export async function sayHi(name) {
+  ...
+}
+</code></pre>
 <p>在package.json中修改npm scripts</p>
-<pre><code class="language-bash">&quot;scripts&quot;: {
+<pre><code class="language-json">&quot;scripts&quot;: {
     &quot;test&quot;: &quot;node --test&quot;
 },
 </code></pre>
-<p>执行测试结果如下。</p>
+<p>其中<code>--test</code>命令行标志指示Node.js自动寻找以<code>.test.js</code>为结尾的文件，并执行其中的测试代码。
+执行测试结果如下。</p>
 <pre><code class="language-bash">$ npm test
 
 &gt; node-v20-helloworld@1.0.6 test
@@ -1730,11 +1796,11 @@ Hello liangqi!
 <p>竟然报错了！这就很莫名奇妙，方法调用都是对的，断言也没问题。</p>
 <p>后经过排查，发现sayHi是Async函数，在测试方法里，没有使用await来对接。需要修改2处。</p>
 <ul>
-<li>test(&quot;test if works correctly&quot;, async function (t) {})，第二个参数，需要修噶以为Async函数，这是因为await外层必须是async函数。</li>
+<li>test(&quot;test if works correctly&quot;, async function (t) {})，第二个参数，需要修改为Async函数，这是因为await外层必须是async函数。</li>
 <li>sayHi(&quot;liangqi&quot;) 方法需要改成await sayHi(&quot;liangqi&quot;)，这样异步方法就转换为同步方法了。</li>
 </ul>
 <p>将代码修改如下</p>
-<pre><code class="language-bash">import { test } from &quot;node:test&quot;;
+<pre><code class="language-javascript">import { test } from &quot;node:test&quot;;
 import assert from &quot;node:assert&quot;;
 
 import { sayHi } from &quot;./index.js&quot;;
@@ -1786,7 +1852,7 @@ $ node-v20-helloworld liangqi
 <pre><code class="language-bash">$ npm i --save node-v20-helloworld
 </code></pre>
 <p>调用代码如下，一定要注意await，上面测试部分有见过坑，不可偷懒。</p>
-<pre><code class="language-bash">#! /usr/bin/env node
+<pre><code class="language-javascript">#! /usr/bin/env node
 import { sayHi } from 'node-v20-helloworld';
 
 async function main(){
@@ -1837,7 +1903,7 @@ main();
 <p><img src="2/img/Untitled%203.png" alt="Untitled" /></p>
 <h2 id="黑粉"><a class="header" href="#黑粉">黑粉</a></h2>
 <p><img src="2/img/Untitled%204.png" alt="Untitled" /></p>
-<p>Ruby on Rails作者DHH在2023年宣布在Turbo 8中放弃使用TypeScript，笔者以为Rails本身追求的是开发效率，十五分钟写一个Blog，结果加了TypeScript，五分钟还没写完类型定义。敏捷社区喜欢测试驱动开发（TDD），本来只需要改改代码就行，现在还要管类型定义和类型 测试，很显然，这样做的效率和质量是矛盾的，在收益不够高的时候，放弃也是正常。型和测试都是一个<a href="https://link.zhihu.com/?target=https%3A//www.jdon.com/tag-15977/">上下文</a>的上文，也就是一个上下文的预设，如果预设类型错误了，全盘皆输，无类型的Javascript则在探索不确定问题上效率更高。</p>
+<p>Ruby on Rails作者DHH在2023年宣布在Turbo 8中放弃使用TypeScript，笔者以为Rails本身追求的是开发效率，十五分钟写一个Blog，结果加了TypeScript，五分钟还没写完类型定义。敏捷社区喜欢测试驱动开发（TDD），本来只需要改改代码就行，现在还要管类型定义和类型 测试，很显然，这样做的效率和质量是矛盾的，在收益不够高的时候，放弃也是正常。类型和测试都是一个<a href="https://link.zhihu.com/?target=https%3A//www.jdon.com/tag-15977/">上下文</a>的上文，也就是一个上下文的预设，如果预设类型错误了，全盘皆输，无类型的Javascript则在探索不确定问题上效率更高。</p>
 <p>1、Rails是崇尚效率的框架，截图中5分钟那个有误，早在2005年<a href="https://www.zhihu.com/search?q=dhh&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A3222336155%7D">dhh</a>成名之作，就是15分钟写一个Blog。所以加了ts，会阻碍效率，对于这样一个追求极致效率的团队，弃用是正常的。</p>
 <p>2、TS适合的是大型项目，团队水平要么很高，要么很低，其实效果都是非常好的。而Rails其实不是很大型的项目，我没太见过，大家都是想快速交付。</p>
 <p>3、Ruby社区有<a href="https://www.zhihu.com/search?q=%E6%95%8F%E6%8D%B7%E5%9F%BA%E5%9B%A0&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A3222336155%7D">敏捷基因</a>，喜欢TDD或XP，代码变动极快的情况下，要把测试改完，要关注类型测试，就会多出非常多的工作。</p>
@@ -1849,9 +1915,9 @@ main();
 <p><img src="2/img/Untitled%205.png" alt="Untitled" /></p>
 <p>高p会想，下面的一线同学少犯点低级错误，参考现在这故障分，搞得人心惶惶，如果只是麻烦一下一线开发，对稳定性有好处，问题不大。一线同学，大家都觉得ts挺先进，别管会不会，用上再说，不行还有any大法。通常大厂都是会比较愿意用ts的。</p>
 <ul>
-<li>规范，比黑魔法要重要，这其实也是选React的原因</li>
-<li>低级错误少，人水平如果高，其实也无所谓的，就怕参差不齐</li>
-<li>不差那点时间，dddd</li>
+<li>规范，比黑魔法要重要，这其实也是选React的原因。</li>
+<li>低级错误少，人水平如果高，其实也无所谓的，就怕参差不齐。</li>
+<li>不差那点时间，dddd。</li>
 <li>不出故障啥都好，稳定性压到一切。</li>
 <li>传承会好的多，喜欢研究带着飞。</li>
 </ul>
@@ -2012,7 +2078,7 @@ export class SmartRouter&lt;T&gt; implements Router&lt;T&gt; {
 <ul>
 <li>转译</li>
 <li>超集</li>
-<li>类型添加与草粗</li>
+<li>类型添加擦除</li>
 <li>如何运行</li>
 </ul>
 <h2 id="转译"><a class="header" href="#转译">转译</a></h2>
@@ -2023,15 +2089,15 @@ export class SmartRouter&lt;T&gt; implements Router&lt;T&gt; {
 </ul>
 <p><img src="2/img/Untitled%207.png" alt="Untitled" /></p>
 <p>编译和转译的目的都是将源代码转换为目标代码，但它们的输出结果和使用场景有所不同。编译通常用于将高级语言转换为机器码，以便在特定的硬件平台上直接运行。转译则更多地用于将一种编程语言转换为另一种编程语言，以便在不同的环境或浏览器中运行。</p>
-<p>js世界历来有转译的传统，被吐槽最多的就是Brendan Eich用了10天写出来的玩具语言，你可以非常轻松的在Chome Devtools里折腾出很多神奇的bug。另外，作为脚本语言，它其实也不是很严格，各种规范也是很混乱，比如jscript，actionscript等曾经就都是让人分不清楚的。</p>
-<p>到现代Web开发，从coffeescript（类Ruby）到Cappuccino（类Objective-c）到rescript（类OCaml语法），到typescript都是转译的思路。最神奇的竟然是es规范发展太快，于是诞生了babeljs这样的现代js转译。除了转译规范，移除类型，啥也不干。</p>
+<p>js世界历来有转译的传统，被吐槽最多的就是Brendan Eich用了10天写出来的玩具语言，你可以非常轻松的在Chrome Devtools里折腾出很多神奇的bug。另外，作为脚本语言，它其实也不是很严格，各种规范也是很混乱，比如JScript，ActionScript等曾经就都是让人分不清楚的。</p>
+<p>到现代Web开发，从coffeescript（类Ruby）到Cappuccino（类Objective-c）到rescript（类OCaml语法），到typescript都是转译的思路。最神奇的竟然是es规范发展太快，于是诞生了Babel.js这样的现代js转译。除了转译规范，移除类型，啥也不干。</p>
 <p><img src="2/img/Untitled%208.png" alt="Untitled" /></p>
 <p>Typescript做的主要的事儿就4件</p>
 <ul>
 <li>增加类型，这是babel没有的。</li>
 <li>babel超集，可以说babel支持的它基本都支持，包含很多es新特性。</li>
 <li>部分增强，比如interface，这是babel没有的。</li>
-<li>转译时擦除类型，比如<code>type</code> 和interface一样，在编译时，会被抹除。</li>
+<li>转译时擦除类型，比如<code>type</code>和interface一样，在编译时，会被抹除。</li>
 </ul>
 <h2 id="超集"><a class="header" href="#超集">超集</a></h2>
 <p>JavaScript很容易学习，而TypeScript的学习曲线较陡，需要事先有脚本编程知识。
@@ -2067,7 +2133,7 @@ JavaScript有一个庞大的开发者社区，而TypeScript没有。</p>
 <p>那么反过来想想呢？</p>
 <h2 id="如何运行"><a class="header" href="#如何运行">如何运行</a></h2>
 <p>1、内置runtime</p>
-<pre><code class="language-tsx">&lt;script src=&quot;https://unpkg.com/typescript@4.9/lib/typescriptServices.js&quot;&gt;&lt;/script&gt;
+<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/typescript@4.9/lib/typescriptServices.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
 const tsCode = 'let num: number = 123;';
 const jsCode = window.ts.transpile(tsCode);
@@ -2111,11 +2177,11 @@ $ tsc hello.ts
 </code></pre>
 <p>通过代码</p>
 <pre><code class="language-tsx">const { outputText } = ts.transpileModule(your_ts_code, {
-    compilerOptions: {
-        strict: false,
-        sourceMap: false,
-        // 其他编译选项
-    }
+  compilerOptions: {
+    strict: false,
+    sourceMap: false,
+    // 其他编译选项
+  }
 });
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ts学习要点"><a class="header" href="#ts学习要点">TS学习要点</a></h1>
@@ -2130,57 +2196,56 @@ $ tsc hello.ts
 <h2 id="类型基础"><a class="header" href="#类型基础">类型基础</a></h2>
 <p>以下是一些TypeScript独有的语法和特性：</p>
 <ol>
-<li>类型注解：TypeScript可以为变量、函数参数、函数返回值等添加类型注解，以指定它们的数据类型。例如：</li>
-</ol>
-<pre><code class="language-tsx">let age: number = 25;
+<li>
+<p>类型注解：TypeScript可以为变量、函数参数、函数返回值等添加类型注解，以指定它们的数据类型。例如：</p>
+<pre><code class="language-ts">let age: number = 25;
 function add(a: number, b: number): number {
   return a + b;
 }
-
 </code></pre>
-<ol>
-<li>接口：TypeScript支持接口的定义，用于描述对象的结构和行为。接口可以定义属性、方法、可选属性、只读属性等。例如：</li>
-</ol>
-<pre><code class="language-tsx">interface Person {
+</li>
+<li>
+<p>接口：TypeScript支持接口的定义，用于描述对象的结构和行为。接口可以定义属性、方法、可选属性、只读属性等。例如：</p>
+<pre><code class="language-ts">interface Person {
   name: string;
   age: number;
   sayHello(): void;
 }
-
 </code></pre>
-<ol>
-<li>泛型：TypeScript支持泛型，用于创建可重用的、类型安全的代码。泛型可以在函数、类、接口中使用，以实现对不同类型的支持。例如：</li>
-</ol>
-<pre><code class="language-tsx">function identity&lt;T&gt;(arg: T): T {
+</li>
+<li>
+<p>泛型：TypeScript支持泛型，用于创建可重用的、类型安全的代码。泛型可以在函数、类、接口中使用，以实现对不同类型的支持。例如：</p>
+<pre><code class="language-ts">function identity&lt;T&gt;(arg: T): T {
   return arg;
 }
 let result = identity&lt;number&gt;(10);
-
 </code></pre>
-<ol>
-<li>类型别名和联合类型：TypeScript支持类型别名，用于给一个类型起一个新的名字。它还支持联合类型，用于指定一个变量可以是多个类型中的一个。例如：</li>
-</ol>
-<pre><code class="language-tsx">type Point = {
+</li>
+<li>
+<p>类型别名和联合类型：TypeScript支持类型别名，用于给一个类型起一个新的名字。它还支持联合类型，用于指定一个变量可以是多个类型中的一个。例如：</p>
+<pre><code class="language-ts">type Point = {
   x: number;
   y: number;
 };
 type Shape = Circle | Rectangle | Triangle;
-
 </code></pre>
-<ol>
-<li>枚举：TypeScript支持枚举类型，用于定义一组具名的常量。枚举类型可以是数字枚举或字符串枚举。例如：</li>
-</ol>
-<pre><code class="language-tsx">enum Color {
+</li>
+<li>
+<p>枚举：TypeScript支持枚举类型，用于定义一组具名的常量。枚举类型可以是数字枚举或字符串枚举。例如：</p>
+<pre><code class="language-ts">enum Color {
   Red,
   Green,
   Blue
 }
 let color: Color = Color.Red;
-
 </code></pre>
+</li>
+</ol>
 <p>这些是TypeScript独有的一些语法和特性，它们使得TypeScript相比于JavaScript具有更强大的类型检查和面向对象编程的能力。通过使用这些特性，开发者可以更好地组织和管理代码，提高代码的可维护性和可读性。</p>
 <p>为了让大家能更好地理解并掌握 TypeScript 内置类型别名，我们先来介绍一下相关的一些基础知识。</p>
-<p>1、<strong>typeof</strong></p>
+<ol>
+<li>
+<p><strong>typeof</strong></p>
 <p>在 TypeScript 中，<code>typeof</code> 操作符可以用来获取一个变量声明或对象的类型。</p>
 <pre><code class="language-ts">interface Person {
   name: string;
@@ -2195,39 +2260,41 @@ function toArray(x: number): Array&lt;number&gt; {
 }
 
 type Func = typeof toArray;// -&gt; (x: number) =&gt; number[]
-
 </code></pre>
-<p>2、<strong>keyof</strong></p>
+</li>
+<li>
+<p><strong>keyof</strong></p>
 <p><code>keyof</code> 操作符可以用来一个对象中的所有 key 值：</p>
 <pre><code class="language-ts">interface Person {
-    name: string;
-    age: number;
+name: string;
+age: number;
 }
 
 type K1 = keyof Person;// &quot;name&quot; | &quot;age&quot;
 type K2 = keyof Person[];// &quot;length&quot; | &quot;toString&quot; | &quot;pop&quot; | &quot;push&quot; | &quot;concat&quot; | &quot;join&quot;
 type K3 = keyof { [x: string]: Person };// string | number
-
 </code></pre>
-<p>3、<strong>in</strong></p>
+</li>
+<li>
+<p><strong>in</strong></p>
 <p><code>in</code> 用来遍历枚举类型：</p>
 <pre><code class="language-ts">type Keys = &quot;a&quot; | &quot;b&quot; | &quot;c&quot;
 
 type Obj =  {
   [p in Keys]: any
 }// -&gt; { a: any, b: any, c: any }
-
 </code></pre>
-<p>4、<strong>infer</strong></p>
+</li>
+<li>
+<p><strong>infer</strong></p>
 <p>在条件类型语句中，可以用 <code>infer</code> 声明一个类型变量并且对它进行使用。</p>
 <pre><code class="language-ts">type ReturnType&lt;T&gt; = T extends (
   ...args: any[]
 ) =&gt; infer R ? R : any;
-
 </code></pre>
 <p>以上代码中 <code>infer R</code> 就是声明一个变量来承载传入函数签名的返回值类型，简单说就是用它取到函数返回值的类型方便之后使用。</p>
 <p>结合下面这种例子，比如容易理解，提取数组的类型。</p>
-<pre><code class="language-tsx">type T0 = string[];
+<pre><code class="language-ts">type T0 = string[];
 type T1 = number[];
 
 type UnpackedArray&lt;T&gt; = T extends (infer U)[] ? U : T
@@ -2236,7 +2303,7 @@ type U0 = UnpackedArray&lt;T1&gt; // number
 let a:U0 = 1
 </code></pre>
 <p>变化一下，如果UnpackedArray参数没有类型，此时的a就1或2，这就是T存在的意义的。</p>
-<pre><code class="language-tsx">type T0 = string[];
+<pre><code class="language-ts">type T0 = string[];
 type T1 = number[];
 type T2 = [1,2];
 
@@ -2246,21 +2313,23 @@ type U0 = UnpackedArray&lt;T2&gt; // number
 let a:U0 = 1
 </code></pre>
 <p>提取数组里的第一个元素，也可以这样做。</p>
-<pre><code class="language-tsx">type First&lt;T extends any[]&gt; = T extends [infer A, ...infer test] ? A : never;
+<pre><code class="language-ts">type First&lt;T extends any[]&gt; = T extends [infer A, ...infer test] ? A : never;
 </code></pre>
 <p>还有更复杂的例子，简单的Includes</p>
-<pre><code class="language-tsx">type Includes&lt;T extends readonly any[], U&gt; = U extends T[number] ? true : false;
+<pre><code class="language-ts">type Includes&lt;T extends readonly any[], U&gt; = U extends T[number] ? true : false;
 </code></pre>
 <p><img src="2/img/Untitled%2013.png" alt="Untitled" /></p>
 <p>如果数组里，含有对象、数组呢？通过 extends + infer + rest + recursive 可以 loop Tuple 返回一个 Type。</p>
-<pre><code class="language-tsx">type Includes&lt;T extends readonly any[], U&gt; = T extends [infer First, ...infer Rest]
+<pre><code class="language-ts">type Includes&lt;T extends readonly any[], U&gt; = T extends [infer First, ...infer Rest]
 ? Equal&lt;U, First&gt; extends true
   ? true
   : Includes&lt;Rest, U&gt;
 : false;
 </code></pre>
 <p>这样玩下去就很有意思了</p>
-<p>5、<strong>extends</strong></p>
+</li>
+<li>
+<p><strong>extends</strong></p>
 <p>有时候我们定义的泛型不想过于灵活或者说想继承某些类等，可以通过 extends 关键字添加泛型约束。</p>
 <pre><code class="language-ts">interface ILengthwise {
   length: number;
@@ -2270,17 +2339,15 @@ function loggingIdentity&lt;T extends ILengthwise&gt;(arg: T): T {
   console.log(arg.length);
   return arg;
 }
-
 </code></pre>
 <p>现在这个泛型函数被定义了约束，因此它不再是适用于任意类型：</p>
 <pre><code class="language-ts">loggingIdentity(3);// Error, number doesn't have a .length property
-
 </code></pre>
 <p>这时我们需要传入符合约束类型的值，必须包含必须的属性：</p>
 <pre><code class="language-ts">loggingIdentity({length: 10, value: 3});
 </code></pre>
 <p>掌握了这些内容，再看一些<a href="https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts">https://github.com/type-challenges/type-challenges/blob/main/utils/index.d.ts</a>就容易多了</p>
-<pre><code class="language-tsx">export type Expect&lt;T extends true&gt; = T
+<pre><code class="language-ts">export type Expect&lt;T extends true&gt; = T
 export type ExpectTrue&lt;T extends true&gt; = T
 export type ExpectFalse&lt;T extends false&gt; = T
 export type IsTrue&lt;T extends true&gt; = T
@@ -2320,6 +2387,8 @@ This passes all the tests from the initial description that I was able to run ex
 </code></pre>
 </blockquote>
 <p>参考：<a href="https://zhuanlan.zhihu.com/p/597298193">https://zhuanlan.zhihu.com/p/597298193</a></p>
+</li>
+</ol>
 <h2 id="面向对象"><a class="header" href="#面向对象">面向对象</a></h2>
 <p>TypeScript是JavaScript的超集，它在JavaScript的基础上扩展了一些独有的语法和特性，以提供更强大的类型检查和面向对象编程的支持。</p>
 <p>从Java过来的同学，会发现这些概念和Java是类似的，不过ts的语法更加简单。</p>
@@ -2332,38 +2401,38 @@ This passes all the tests from the initial description that I was able to run ex
 <li><a href="https://www.zhihu.com/search?q=%E8%8C%83%E5%9E%8B&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A3126865898%7D">范型</a>在Java里，语法也是非常的变态，因为你很多时候不知道要把<code>&lt;&gt;</code>放在什么地方。在ts中，一样的难受。具体怎么熟悉，只有在实践中磨练了</li>
 </ul>
 <p>下面是一段简单的ts代码，可以很好的表达面向对象的写法。</p>
-<pre><code class="language-tsx">class Animal {
-    public name;
-    protected a;
-    private b: string;
-    constructor(name) {
-        this.name = name;
-    }
-    get name() {
-     return 'Jack';
+<pre><code class="language-ts">class Animal {
+  public name;
+  protected a;
+  private b: string;
+  constructor(name) {
+    this.name = name;
   }
-   set name(value) {
-     console.log('setter: ' + value);
-   }
-    sayhi() {
-        return `my name is ${this.name}`;
-    }
+  get name() {
+   return 'Jack';
+  }
+  set name(value) {
+    console.log('setter: ' + value);
+  }
+  sayhi() {
+    return `my name is ${this.name}`;
+  }
 }
 
 class Cat extends Animal {
-    constructor(name) {
-        super(name)
-    }
-    sayhi() {
-        return &quot;meow &quot; + super.sayhi()
-    }
-    static iaAnimal(a) {
-        return a instanceof Animal;
-    }
+  constructor(name) {
+    super(name)
+  }
+  sayhi() {
+    return &quot;meow &quot; + super.sayhi()
+  }
+  static iaAnimal(a) {
+    return a instanceof Animal;
+  }
 }
 
 function gen&lt;T extends Animal&gt;(name: T): void {
-    console.log(name.name)
+  console.log(name.name)
 }
 </code></pre>
 <p>虽然 JavaScript 中有类的概念，但是可能大多数 JavaScript 程序员并不是非常熟悉类，这里对类相关的概念做一个简单的介绍。</p>
@@ -2385,7 +2454,7 @@ function gen&lt;T extends Animal&gt;(name: T): void {
 <h3 id="装饰器和ioc"><a class="header" href="#装饰器和ioc">装饰器和IoC</a></h3>
 <p>举例Midway或Nestjs，他们都属于同一类的web框架</p>
 <p>控制器</p>
-<pre><code class="language-tsx">import { Controller, Get } from '@nestjs/common';
+<pre><code class="language-ts">import { Controller, Get } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
 
@@ -2400,7 +2469,7 @@ export class CatsController {
 }
 </code></pre>
 <p>服务层</p>
-<pre><code class="language-tsx">import { Injectable } from '@nestjs/common';
+<pre><code class="language-ts">import { Injectable } from '@nestjs/common';
 import { Cat } from './interfaces/cat.interface';
 
 @Injectable()
@@ -2419,22 +2488,24 @@ export class CatsService {
 <p>实现要点</p>
 <ol>
 <li>装饰器获取元数据</li>
-<li>通过inversify 或 type地 基于typescript 的ioc 框架，结合元数据实现。</li>
+<li>通过 inversify 或 typedi 等基于typescript的ioc框架，结合元数据实现。</li>
 </ol>
 <p>再举个例子，这是java里的测试框架JUnit的写法。</p>
-<pre><code class="language-bash">class MyFirstJUnitJupiterTests {
+<pre><code class="language-java">class MyFirstJUnitJupiterTests {
 
-    private final Calculator calculator = new Calculator();
+  private final Calculator calculator = new Calculator();
 
-    @Test
-    void addition() {
-        assertEquals(2, calculator.add(1, 1));
-    }
+  @Test
+  void addition() {
+    assertEquals(2, calculator.add(1, 1));
+  }
 }
 </code></pre>
 <p>放到ts世界，使用类似于midway的写法。</p>
-<p>1、使用注解</p>
-<pre><code class="language-bash">class MyFirstJUnitJupiterTests {
+<ol>
+<li>
+<p>使用注解</p>
+<pre><code class="language-ts">class MyFirstJUnitJupiterTests {
   private calculator = new Calculator();
 
   @Test
@@ -2443,8 +2514,10 @@ export class CatsService {
   }
 }
 </code></pre>
-<p>2、使用ioc容器注入</p>
-<pre><code class="language-bash">class MyFirstJUnitJupiterTests {
+</li>
+<li>
+<p>使用ioc容器注入</p>
+<pre><code class="language-ts">class MyFirstJUnitJupiterTests {
   @Inject()
   calculator: Calculator;
 
@@ -2455,7 +2528,7 @@ export class CatsService {
 }
 </code></pre>
 <p>这里的@Test实现如下。</p>
-<pre><code class="language-tsx">export function Test(
+<pre><code class="language-ts">export function Test(
   target: object | any,
   propertyName: string,
   descriptor: TypedPropertyDescriptor&lt;any&gt;,
@@ -2472,6 +2545,8 @@ export class CatsService {
   cache[className][propertyName][&quot;fn&quot;] = target[propertyName];
 }
 </code></pre>
+</li>
+</ol>
 <p>其实，说白了就是通过装饰器，获取测试用例信息，等执行测试的时候再去调用。</p>
 <h3 id="设计模式"><a class="header" href="#设计模式">设计模式</a></h3>
 <p>设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。</p>
@@ -2485,27 +2560,33 @@ export class CatsService {
 <p>模板方法模式（Template Method Pattern），又叫模板模式(Template Pattern)，在一个抽象类公开定义了执行它的方法的模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。</p>
 <p>简单说，模板方法模式，定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构，就可以重定义该算法的某些特定步骤，这种类型的设计模式属于行为型模式。</p>
 <p>用abstract定义抽象类和抽象方法，抽象类中的抽象方法不包含具体实现并且必须在派生类中实现</p>
-<p>1、抽象方法必须在抽象类中</p>
-<p>2、抽象类和抽象方法是一个标准，定义标准后，子类中必须包含抽象定义的方法</p>
-<pre><code class="language-tsx">abstract class Futher { /* 定义一个抽象方法 */
-    public age: number;
-    constructor(age: number) {
-        this.age = age
-    }
-    abstract counts(): any; /* 抽象方法必须在抽象类中 */
+<ol>
+<li>
+<p>抽象方法必须在抽象类中</p>
+</li>
+<li>
+<p>抽象类和抽象方法是一个标准，定义标准后，子类中必须包含抽象定义的方法</p>
+</li>
+</ol>
+<pre><code class="language-ts">abstract class Father { /* 定义一个抽象方法 */
+  public age: number;
+  constructor(age: number) {
+    this.age = age
+  }
+  abstract counts(): any; /* 抽象方法必须在抽象类中 */
 }
 
-class children extends Futher {
-    constructor(age: number) {
-        super(age)
-    }
-    counts(): void {    /* 子类中必须有抽象类中的抽象方法 */
-        console.log(this.age - 1)
-    }
+class children extends Father {
+  constructor(age: number) {
+    super(age)
+  }
+  counts(): void {    /* 子类中必须有抽象类中的抽象方法 */
+    console.log(this.age - 1)
+  }
 }
 </code></pre>
 <p>举例模版模式</p>
-<pre><code class="language-tsx">/**
+<pre><code class="language-ts">/**
  * The Abstract Class defines a template method that contains a skeleton of some
  * algorithm, composed of calls to (usually) abstract primitive operations.
  *
@@ -2513,50 +2594,50 @@ class children extends Futher {
  * method itself intact.
  */
 abstract class AbstractClass {
-    /**
-     * The template method defines the skeleton of an algorithm.
-     */
-    public templateMethod(): void {
-        this.baseOperation1();
-        this.requiredOperations1();
-        this.baseOperation2();
-        this.hook1();
-        this.requiredOperation2();
-        this.baseOperation3();
-        this.hook2();
-    }
+  /**
+   * The template method defines the skeleton of an algorithm.
+   */
+  public templateMethod(): void {
+    this.baseOperation1();
+    this.requiredOperations1();
+    this.baseOperation2();
+    this.hook1();
+    this.requiredOperation2();
+    this.baseOperation3();
+    this.hook2();
+  }
 
-    /**
-     * These operations already have implementations.
-     */
-    protected baseOperation1(): void {
-        console.log('AbstractClass says: I am doing the bulk of the work');
-    }
+  /**
+   * These operations already have implementations.
+   */
+  protected baseOperation1(): void {
+    console.log('AbstractClass says: I am doing the bulk of the work');
+  }
 
-    protected baseOperation2(): void {
-        console.log('AbstractClass says: But I let subclasses override some operations');
-    }
+  protected baseOperation2(): void {
+    console.log('AbstractClass says: But I let subclasses override some operations');
+  }
 
-    protected baseOperation3(): void {
-        console.log('AbstractClass says: But I am doing the bulk of the work anyway');
-    }
+  protected baseOperation3(): void {
+    console.log('AbstractClass says: But I am doing the bulk of the work anyway');
+  }
 
-    /**
-     * These operations have to be implemented in subclasses.
-     */
-    protected abstract requiredOperations1(): void;
+  /**
+   * These operations have to be implemented in subclasses.
+   */
+  protected abstract requiredOperations1(): void;
 
-    protected abstract requiredOperation2(): void;
+  protected abstract requiredOperation2(): void;
 
-    /**
-     * These are &quot;hooks.&quot; Subclasses may override them, but it's not mandatory
-     * since the hooks already have default (but empty) implementation. Hooks
-     * provide additional extension points in some crucial places of the
-     * algorithm.
-     */
-    protected hook1(): void { }
+  /**
+   * These are &quot;hooks.&quot; Subclasses may override them, but it's not mandatory
+   * since the hooks already have default (but empty) implementation. Hooks
+   * provide additional extension points in some crucial places of the
+   * algorithm.
+   */
+  protected hook1(): void { }
 
-    protected hook2(): void { }
+  protected hook2(): void { }
 }
 
 /**
@@ -2564,30 +2645,30 @@ abstract class AbstractClass {
  * They can also override some operations with a default implementation.
  */
 class ConcreteClass1 extends AbstractClass {
-    protected requiredOperations1(): void {
-        console.log('ConcreteClass1 says: Implemented Operation1');
-    }
+  protected requiredOperations1(): void {
+    console.log('ConcreteClass1 says: Implemented Operation1');
+  }
 
-    protected requiredOperation2(): void {
-        console.log('ConcreteClass1 says: Implemented Operation2');
-    }
+  protected requiredOperation2(): void {
+    console.log('ConcreteClass1 says: Implemented Operation2');
+  }
 }
 
 /**
  * Usually, concrete classes override only a fraction of base class' operations.
  */
 class ConcreteClass2 extends AbstractClass {
-    protected requiredOperations1(): void {
-        console.log('ConcreteClass2 says: Implemented Operation1');
-    }
+  protected requiredOperations1(): void {
+    console.log('ConcreteClass2 says: Implemented Operation1');
+  }
 
-    protected requiredOperation2(): void {
-        console.log('ConcreteClass2 says: Implemented Operation2');
-    }
+  protected requiredOperation2(): void {
+    console.log('ConcreteClass2 says: Implemented Operation2');
+  }
 
-    protected hook1(): void {
-        console.log('ConcreteClass2 says: Overridden Hook1');
-    }
+  protected hook1(): void {
+    console.log('ConcreteClass2 says: Overridden Hook1');
+  }
 }
 
 /**
@@ -2596,9 +2677,9 @@ class ConcreteClass2 extends AbstractClass {
  * long as it works with objects through the interface of their base class.
  */
 function clientCode(abstractClass: AbstractClass) {
-    // ...
-    abstractClass.templateMethod();
-    // ...
+  // ...
+  abstractClass.templateMethod();
+  // ...
 }
 
 console.log('Same client code can work with different subclasses:');
@@ -2612,7 +2693,7 @@ clientCode(new ConcreteClass2());
 <h2 id="内置类型工具"><a class="header" href="#内置类型工具">内置类型工具</a></h2>
 <p>简单举几个类型工具的例子：</p>
 <p>增加字段</p>
-<pre><code class="language-tsx">type X = {
+<pre><code class="language-ts">type X = {
   a: number;
   b: number;
 };
@@ -2625,7 +2706,7 @@ const x: X = { a: 1, b: 2 };
 const y: Y = { a: 1, b: 2, c: 3 };
 </code></pre>
 <p>合并</p>
-<pre><code class="language-tsx">type X = {
+<pre><code class="language-ts">type X = {
   a: number;
   b: number;
 };
@@ -2654,7 +2735,7 @@ type Y = Pick&lt;X, &quot;b&quot; | &quot;c&quot;&gt;;
 const y: Y = { b: 1, c: 3 };
 </code></pre>
 <p>删除</p>
-<pre><code class="language-tsx">type X = {
+<pre><code class="language-ts">type X = {
   a: number;
   b: number;
   c: number;
@@ -2668,8 +2749,8 @@ const y: Y = { a: 1, c: 3 };
 <h2 id="深入学习方法"><a class="header" href="#深入学习方法">深入学习方法</a></h2>
 <h2 id="类型学习"><a class="header" href="#类型学习">类型学习</a></h2>
 <p>首先阅读<a href="https://www.typescriptlang.org/docs/">文档</a>，里面的内容非常丰富，可读性还是非常不错的。</p>
-<p>其次，看<a href="https://github.com/gikey/tool-types%EF%BC%8C%E8%99%BD%E7%84%B6%E5%AE%83%E6%B2%A1%E6%9C%89star%EF%BC%8C%E4%BD%86%E6%9B%B4%E5%AE%B9%E6%98%93%E7%90%86%E8%A7%A3%E3%80%82">https://github.com/gikey/tool-types，虽然它没有star，但更容易理解。</a></p>
-<pre><code class="language-tsx">/**
+<p>其次，看<a href="https://github.com/gikey/tool-types">https://github.com/gikey/tool-types</a>，虽然它没有star，但更容易理解。</p>
+<pre><code class="language-ts">/**
  * Intersect
  * @desc 获取两个类型中属性的交集
  * @example
@@ -2696,8 +2777,8 @@ export type UnionOmit&lt;T, U&gt; = T &amp; Omit&lt;T, keyof U&gt;;
 export type TupleUnion&lt;T&gt; = T extends Array&lt;infer U&gt; ? U : never;
 </code></pre>
 <p>掌握了这些内容之后，基本类型就过关了。</p>
-<p>然后看<a href="https://github.com/sindresorhus/type-fest%EF%BC%8C%E6%AF%94%E5%A6%82%E5%AE%83%E7%9A%84basic">https://github.com/sindresorhus/type-fest，比如它的basic</a></p>
-<pre><code class="language-tsx">export type Class&lt;T, Arguments extends unknown[] = any[]&gt; = {
+<p>然后看<a href="https://github.com/sindresorhus/type-fest">https://github.com/sindresorhus/type-fest</a>，比如它的basic</p>
+<pre><code class="language-ts">export type Class&lt;T, Arguments extends unknown[] = any[]&gt; = {
  prototype: T;
  new(...arguments_: Arguments): T;
 };
@@ -2719,7 +2800,7 @@ export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 </code></pre>
 <p>再去看其他的就简单多了，比如jsonify。</p>
-<pre><code class="language-tsx">export type Jsonify&lt;T&gt; = IsAny&lt;T&gt; extends true
+<pre><code class="language-ts">export type Jsonify&lt;T&gt; = IsAny&lt;T&gt; extends true
  ? any
  : T extends PositiveInfinity | NegativeInfinity
   ? null
@@ -2765,7 +2846,7 @@ export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 </code></pre>
 <p>答案和大部分人都是相同的，只是在这里和说明一下keyof 及 in 的概念及用法，避免刚接触的小伙伴查找。</p>
 <p>keyof: 取interface的键后保存为联合类型</p>
-<pre><code class="language-tsx">interface userInfo {
+<pre><code class="language-ts">interface userInfo {
   name: string
   age: number
 }
@@ -2774,14 +2855,14 @@ type keyofValue = keyof userInfo
 </code></pre>
 <p>in: 取联合类型的值，主要用于数组和对象的构建</p>
 <p>切记不要用于interface, 否则会报错</p>
-<pre><code class="language-tsx">type name = 'firstname' | 'lastname'
+<pre><code class="language-ts">type name = 'firstname' | 'lastname'
 type TName = {
   [key in name]: string
 }
 // TName = { firstname: string, lastname: string }
 </code></pre>
 <p>用于实际开发，举个例子：</p>
-<pre><code class="language-tsx">function getValue(o:object, key: string){
+<pre><code class="language-ts">function getValue(o:object, key: string){
   return o[key]
 }
 const obj1 = { name: '张三', age: 18 }
@@ -2792,7 +2873,7 @@ const values = getValue(obj1, 'name')
 <li>无法确定返回值类型</li>
 <li>无法对key进行约束</li>
 </ol>
-<pre><code class="language-tsx">function getValue&lt;T extends Object,K extends keyof T&gt;(o: T,key: K): T[K] {
+<pre><code class="language-ts">function getValue&lt;T extends Object,K extends keyof T&gt;(o: T,key: K): T[K] {
   return o[key]
 }
 const obj1 = { name: '张三'， age: 18}
@@ -2804,7 +2885,7 @@ const values = getValue(obj1, 'name')
 我的第一个命令是你可以通过创建一个新的类型，将on字段中的每个事件处理函数映射到一个新的字段上，该字段的名称是在事件名称前添加on并将其转换为驼峰命名法。
 </code></pre>
 <p>结果</p>
-<pre><code class="language-bash">type EventHandlers&lt;T&gt; = {
+<pre><code class="language-ts">type EventHandlers&lt;T&gt; = {
   [K in keyof T as `on${Capitalize&lt;string &amp; K&gt;}`]: (event: T[K]) =&gt; void;
 };
 </code></pre>
@@ -2868,7 +2949,7 @@ added 12 packages, and audited 13 packages in 17s
 found 0 vulnerabilities
 </code></pre>
 <p>此时，我们可以将上面node 20里的.mjs代码拿过来，放到.ts里。</p>
-<pre><code class="language-bash">// helloworld.ts
+<pre><code class="language-ts">// helloworld.ts
 export class HelloWorld {
   say(name) {
     console.log(`Hello ${name}!`)
@@ -2938,28 +3019,22 @@ export class HelloWorld implements IPerson {
 <li>通过编译可以检查类型错误，保证输出的JavaScript代码质量。</li>
 </ul>
 <p>示例：</p>
-<pre><code class="language-tsx">
-// hello.ts
+<pre><code class="language-ts">// hello.ts
 function greet(name: string) {
   return &quot;Hello &quot; + name;
 }
 
 const message = greet(&quot;John&quot;);
-
 </code></pre>
 <p>使用tsc编译：</p>
-<pre><code class="language-bash">
-tsc hello.ts
-
+<pre><code class="language-bash">tsc hello.ts
 </code></pre>
 <p>这会生成一个hello.js文件：</p>
-<pre><code class="language-ts">
-function greet(name) {
+<pre><code class="language-ts">function greet(name) {
   return &quot;Hello &quot; + name;
 }
 
 const message = greet(&quot;John&quot;);
-
 </code></pre>
 <p>编译过程：</p>
 <ol>
@@ -2973,14 +3048,10 @@ const message = greet(&quot;John&quot;);
 <p>ts-node 是一个 Node.js 的执行环境，它可以让你在 Node.js 环境中直接运行 TypeScript 代码。</p>
 <p>它通过在运行时将 TypeScript 转译为 JavaScript 来实现这一点，因此你不需要在编写 TypeScript 代码之前先将其转译为 JavaScript。这使得你可以在不离开 Node.js 环境的情况下使用 TypeScript 的语言特性。</p>
 <p>ts-node 可以通过 npm 包管理器安装，在命令行中使用以下命令即可安装：</p>
-<pre><code>
-$ npm install -g ts-node
-
+<pre><code class="language-bash">$ npm install -g ts-node
 </code></pre>
 <p>在安装完成后，你就可以在命令行中使用 <code>ts-node</code> 命令来运行 TypeScript 代码了。例如，你可以在命令行中输入以下命令来运行 TypeScript 文件：</p>
-<pre><code>
-$ ts-node myFile.ts
-
+<pre><code class="language-bash">$ ts-node myFile.ts
 </code></pre>
 <p>虽然ts-node在开发过程中提供了很多便利，但也存在一些缺点：</p>
 <ol>
@@ -3012,7 +3083,7 @@ $ ts-node myFile.ts
 <ul>
 <li>新版也支持ES6和sourcemap的</li>
 <li>纯js，非常快，适合浏览器环境</li>
-<li>结合esm.sh，做bundless是极好的选择，比如devjar就是这样做的。</li>
+<li>结合esm.sh，做boundless是极好的选择，比如devjar就是这样做的。</li>
 <li>缺点不支持装饰器，所以如果想去做一些midway框架编译就别想了</li>
 </ul>
 </li>
@@ -3117,7 +3188,7 @@ import { readFile } from &quot;node:fs/promises&quot;;
 
 async function main() {
   const data = await readFile(&quot;./fixture.ts&quot;);
- await esbuild
+  await esbuild
     .transform(data, {
       loader: &quot;ts&quot;,
     })
@@ -3165,7 +3236,7 @@ await esbuild.build({
 <p><code>TypeDoc</code> 是一款 <code>TypeScript</code> 文档生成工具，它能够读取你的 <code>TypeScript</code> 源文件，对其进行语法分析，根据其中的类型标注与注释内容，自动为你的代码生成包含文档内容的静态网站。甚至可以通过API Extractor生成SDK文档。</p>
 <p>选择 <code>TypeDoc</code> 主要有以下理由：</p>
 <ul>
-<li>充分利用了 <code>TypeScript</code> 的编译能力，文档内容并不是完全依赖注释，<code>TypeScirpt</code> 的原生类型标注也将成文文档的重要内容。</li>
+<li>充分利用了 <code>TypeScript</code> 的编译能力，文档内容并不是完全依赖注释，<code>TypeScript</code> 的原生类型标注也将成文文档的重要内容。</li>
 <li>注释符合官方的 <a href="https://link.zhihu.com/?target=https%3A//tsdoc.org/">tsdoc</a> 标准规范。</li>
 <li>可拓展性强，有许多插件可以满足可能产生的个性化需求。<a href="https://link.zhihu.com/?target=https%3A//typedoc.org/guides/plugins/">typedoc 插件</a></li>
 </ul>
@@ -3195,9 +3266,8 @@ await esbuild.build({
 </code></pre>
 <p><a href="https://tsdoc.org/play/">https://tsdoc.org/play/</a></p>
 <pre><code class="language-json">&quot;scripts&quot;: {
-    &quot;doc&quot;: &quot;npx api-extractor run --local &amp;&amp; api-documenter markdown -i temp -o docs/api &amp;&amp; node docs/build.js&quot;
-  },
-
+  &quot;doc&quot;: &quot;npx api-extractor run --local &amp;&amp; api-documenter markdown -i temp -o docs/api &amp;&amp; node docs/build.js&quot;
+}
 </code></pre>
 <p>步骤</p>
 <ol>
@@ -3255,9 +3325,7 @@ Metalsmith(__dirname)         // parent directory of this file
 <li>use插件做法，和koa中间用法类似</li>
 </ol>
 <h2 id="使用已有插件"><a class="header" href="#使用已有插件">使用已有插件</a></h2>
-<pre><code class="language-jsx">
-import layouts from &quot;@metalsmith/layouts&quot;;
-
+<pre><code class="language-jsx">import layouts from &quot;@metalsmith/layouts&quot;;
 ...
 .use(
     layouts({
@@ -3514,14 +3582,12 @@ ESM ⚡️ Build success in 330ms
 <li>
 <p>使用<code>-inspect</code>参数启动Node.js应用程序：</p>
 <pre><code>node --inspect index.js
-
 </code></pre>
 <p>这将启动Node.js应用程序<code>index.js</code>并监听默认的调试端口。然后，你可以在Chrome浏览器中打开<code>chrome://inspect</code>页面，点击&quot;Open dedicated DevTools for Node&quot;按钮，就可以使用Chrome开发者工具进行调试了。</p>
 </li>
 <li>
 <p>使用<code>-inspect-brk</code>参数启动Node.js应用程序：</p>
 <pre><code>node --inspect-brk index.js
-
 </code></pre>
 <p>这将启动Node.js应用程序<code>index.js</code>并监听默认的调试端口。应用程序会在启动后立即停止在第一行，等待调试器连接。你可以在Chrome浏览器中打开<code>chrome://inspect</code>页面，点击&quot;Open dedicated DevTools for Node&quot;按钮，就可以使用Chrome开发者工具进行调试了。在调试器连接之前，应用程序会一直停在第一行。</p>
 </li>
@@ -4890,8 +4956,8 @@ packages/
 </div>
 <p>还有一些其他特性</p>
 <p><img src="6/img/Untitled%203.png" alt="Untitled" /></p>
-<p>pnpm使用的是npm version 2.x类似的树形结构，同时使用.pnpm 以平铺的形式储存着所有的包。这里的.pnmp为虚拟存储目录，该目录通过<code>&lt;package-name&gt;@&lt;version&gt;</code>来实现相同模块不同版本之间隔离和复用，由于它只会根据项目中的依赖生成，并不存在提升，所以它不会存在之前提到的<strong>Phantom dependencies</strong>问题！</p>
-<p>然后使用Store + Links和文件资源进行关联。简单说pnpm把会包下载到一个公共目录，如果某个依赖在 sotre 目录中存在了话，那么就会直接从 store 目录里面去 hard-link，避免了二次安装带来的时间消耗，如果依赖在 store 目录里面不存在的话，就会去下载一次。</p>
+<p>pnpm使用的是npm version 2.x类似的树形结构，同时使用.pnpm 以平铺的形式储存着所有的包。这里的.pnpm为虚拟存储目录，该目录通过<code>&lt;package-name&gt;@&lt;version&gt;</code>来实现相同模块不同版本之间隔离和复用，由于它只会根据项目中的依赖生成，并不存在提升，所以它不会存在之前提到的<strong>Phantom dependencies</strong>问题！</p>
+<p>然后使用Store + Links和文件资源进行关联。简单说pnpm把会包下载到一个公共目录，如果某个依赖在 store 目录中存在了话，那么就会直接从 store 目录里面去 hard-link，避免了二次安装带来的时间消耗，如果依赖在 store 目录里面不存在的话，就会去下载一次。</p>
 <p>通过Store + hard link的方式，不仅解决了项目中的NPM doppelgangers问题，项目之间也不存在该问题，从而完美解决了npm3+和yarn中的包重复问题！</p>
 <p><img src="6/img/Untitled%204.png" alt="Untitled" /></p>
 <p>pnpm除了安装速度快，节省磁盘空间，避免幽灵依赖等优化，也内置了对monorepo的支持。使用起来比较简单，在项目根目录中新建pnpm-workspace.yaml文件，并声明对应的工作区就好。</p>
@@ -5104,7 +5170,7 @@ DevTools listening on ws://127.0.0.1:61755/devtools/browser/0a2f2716-10cb-49b9-a
 <ul>
 <li>将所有的子项目统一打包编译，命令:<code>npx nx run-many --target=build</code></li>
 <li>如果不需要使用cache缓存，可以使用命令:<code>npx nx run-many --target=build --skip-nx-cache</code></li>
-<li>如果需要查看当前子项目依赖的项目是否被修改，可以使用命令：<code>npx nx affected --target=buil</code>d</li>
+<li>如果需要查看当前子项目依赖的项目是否被修改，可以使用命令：<code>npx nx affected --target=build</code></li>
 <li>如果需要查看当前子项目依赖的图，可以使用命令：<code>npx nx graph</code></li>
 </ul>
 <p>比如依赖如下。</p>
