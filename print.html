@@ -4321,7 +4321,7 @@ All files      |   89.47 |    83.33 |     100 |   89.47 |
 <p>在Node.js世界里，使用后2者用的其实是非常多。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="开发你的第一个模块"><a class="header" href="#开发你的第一个模块">开发你的第一个模块</a></h1>
 <h2 id="初始化"><a class="header" href="#初始化">初始化</a></h2>
-<pre><code class="language-tsx">$ git clone --depth 1 git@github.com:npmstudy/your-node-v20-monorepo-project.git my-monorepo
+<pre><code class="language-bash">$ git clone --depth 1 git@github.com:npmstudy/your-node-v20-monorepo-project.git my-monorepo
 Cloning into 'my-monorepo'...
 remote: Enumerating objects: 52, done.
 remote: Counting objects: 100% (52/52), done.
@@ -4331,7 +4331,7 @@ Receiving objects: 100% (52/52), 89.56 KiB | 181.00 KiB/s, done.
 Resolving deltas: 100% (2/2), done.
 </code></pre>
 <p>只克隆最新的代码，无更多git commit记录。</p>
-<pre><code class="language-tsx">$ rm -rf .git/
+<pre><code class="language-bash">$ rm -rf .git/
 $ git init
 Initialized empty Git repository in /Users/alfred/workspace/npmstudy/my-monorepo/.git/
 $ git status
@@ -4425,7 +4425,7 @@ $ git commit -am 'init'
 </ol>
 <p>pnpm是一个快速、高效且节省空间的包管理工具，适用于大型项目和Monorepo。</p>
 <p>安装pnpm</p>
-<pre><code class="language-tsx">$ npm i -g pnpm
+<pre><code class="language-bash">$ npm i -g pnpm
 
 added 1 package in 4s
 
@@ -4433,7 +4433,7 @@ added 1 package in 4s
   run `npm fund` for details
 </code></pre>
 <p>安装依赖</p>
-<pre><code class="language-tsx">$ pnpm i
+<pre><code class="language-bash">$ pnpm i
 Scope: all 3 workspace projects
 Lockfile is up to date, resolution step is skipped
 Packages: +819
@@ -4477,7 +4477,7 @@ Done in 5.6s
 
 </code></pre>
 <h2 id="目录结构"><a class="header" href="#目录结构">目录结构</a></h2>
-<pre><code class="language-tsx">$ tree . -L 4 -I node_modules
+<pre><code class="language-bash">$ tree . -L 4 -I node_modules
 .
 ├── LICENSE
 ├── README.md
@@ -4528,7 +4528,7 @@ Done in 5.6s
 </ol>
 <h2 id="模块代码"><a class="header" href="#模块代码">模块代码</a></h2>
 <p>目录结构</p>
-<pre><code class="language-tsx">$ tree packages/lib/ -I node_modules
+<pre><code class="language-bash">$ tree packages/lib/ -I node_modules
 packages/lib/
 ├── package.json
 ├── src
@@ -4562,13 +4562,13 @@ packages/lib/
 <li>强大的功能：Vitest支持常见的单元测试功能，包括断言、测试套件、测试组织和测试覆盖率等。它还提供了丰富的扩展性，可以根据项目的需求进行自定义配置和扩展。</li>
 <li>社区支持：Vitest是一个开源项目，拥有活跃的社区支持。你可以在GitHub上找到其代码库，并参与讨论、提问问题或贡献代码。</li>
 </ol>
-<p>它个快速、简单易用且功能强大的单元测试框架，适用于使用Vite构建的项目。它和Node.js test runner很像，你可以通过阅读文档和示例来了解更多关于Vitest的信息，并开始在你的项目中使用它。</p>
+<p>它是个快速、简单易用且功能强大的单元测试框架，适用于使用Vite构建的项目。它和Node.js test runner很像，你可以通过阅读文档和示例来了解更多关于Vitest的信息，并开始在你的项目中使用它。</p>
 <aside>
 💡 学会一门，其他就会触类旁通，这是学习的好处。
 </aside>
 <h2 id="示例-1"><a class="header" href="#示例-1">示例</a></h2>
 <p>目录</p>
-<pre><code class="language-tsx">$ tree example/ -I node_modules
+<pre><code class="language-bash">$ tree example/ -I node_modules
 example/
 ├── package.json
 ├── src
@@ -4578,7 +4578,7 @@ example/
 1 directory, 3 files
 </code></pre>
 <p>这里以koa为例</p>
-<pre><code class="language-tsx">import Koa from 'koa';
+<pre><code class="language-js">import Koa from 'koa';
 import { lib } from 'lib2';
 const app = new Koa();
 
@@ -4589,7 +4589,7 @@ app.use(async (ctx) =&gt; {
 app.listen(3000);
 </code></pre>
 <p>执行</p>
-<pre><code class="language-tsx">$ pnpm example
+<pre><code class="language-bash">$ pnpm example
 
 &gt; your-node-v20-monorepo-project@ example /Users/alfred/workspace/npmstudy/my-monorepo
 &gt; npm run build &amp;&amp; pnpm -F example dev
@@ -4617,13 +4617,13 @@ app.listen(3000);
 <p>此时访问<a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/</a></p>
 <p><img src="6/img/Untitled%201.png" alt="Untitled" /></p>
 <p>其实，在这种Node.js Server应用里，也是可以进行测试的，比如使用supertest测试api和页面，甚至如果想极致一点，也可以使用Cypress做e2e测试。</p>
-<p>这是从简，并没有加，如果大家感兴趣，可以作为课后练习。</p>
+<p>这里从简，并没有加，如果大家感兴趣，可以作为课后练习。</p>
 <h2 id="新增模块"><a class="header" href="#新增模块">新增模块</a></h2>
 <p>如果想新增一个模块，那就通过简单的shell命令就可以了。</p>
-<pre><code class="language-tsx">$ cp -rf packages/lib packages/lib3
+<pre><code class="language-bash">$ cp -rf packages/lib packages/lib3
 </code></pre>
 <p>查看packages下内容，会发现多了lib3</p>
-<pre><code class="language-tsx">$ tree packages/ -L 2
+<pre><code class="language-bash">$ tree packages/ -L 2
 packages/
 ├── lib
 │   ├── dist
@@ -4658,28 +4658,31 @@ packages/
 <li>cli解析，推荐使用commander或cac</li>
 <li>输入项，推荐使用 <a href="https://www.npmjs.com/package/inquirer">https://www.npmjs.com/package/inquirer</a></li>
 <li>模版引擎推荐使用handlebars</li>
-<li>可以<a href="https://www.npmjs.com/package/download-git-repo">**download-git-repo</a> 或** <a href="6/dclone">https://www.npmjs.com/package/dclone</a>.</li>
+<li>可以 <strong><a href="https://www.npmjs.com/package/download-git-repo">download-git-repo</a></strong> 或 <a href="6/dclone">https://www.npmjs.com/package/dclone</a>.</li>
 </ol>
 <aside>
 💡 在前端开发中，脚手架是一个用于快速搭建项目结构和提供初始配置的工具。它可以帮助开发者快速创建项目，并集成了一些常用的工具、库和最佳实践。
 </aside>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="开源最佳实践"><a class="header" href="#开源最佳实践">开源最佳实践</a></h1>
 <p>在 <a href="https://github.com/npmstudy/your-node-v20-monorepo-project">https://github.com/npmstudy/your-node-v20-monorepo-project</a> 里，我们用到的技术栈如下。</p>
-<pre><code class="language-markdown">- [Tsup](https://tsup.egoist.dev/) as a TypeScript universal package.
-- [Tsx](https://github.com/esbuild-kit/tsx) as a Node.js enhanced with esbuild to run TypeScript &amp; ESM
-- [Tsd](https://github.com/SamVerschueren/tsd) as type test runner
-- [Tsdoc](https://tsdoc.org/) as document
-- [PNPM](https://pnpm.io/workspaces) as workspace manager and package manager.
-- [Vitest](https://vitest.dev/) as a test runner.
-- [Size Limit](https://github.com/ai/size-limit) as a size limit plugin.
-- [Prettier](https://prettier.io/) as a code formatter.
-- [ESLint](https://eslint.org/) as a code linter.
-- [NX](https://nx.dev) as cacheable operations.
-- [Changesets](https://github.com/changesets/changesets/) as a way to manage changes and releases.
-- [c8](https://www.npmjs.com/package/c8) as coverage
-- [supertest](https://www.npmjs.com/package/supertest) as server test
-- [cypress](https://www.cypress.io/) as e2e test
-</code></pre>
+<blockquote>
+<ul>
+<li><a href="https://tsup.egoist.dev/">Tsup</a> as a TypeScript universal package.</li>
+<li><a href="https://github.com/esbuild-kit/tsx">Tsx</a> as a Node.js enhanced with esbuild to run TypeScript &amp; ESM</li>
+<li><a href="https://github.com/SamVerschueren/tsd">Tsd</a> as type test runner</li>
+<li><a href="https://tsdoc.org/">Tsdoc</a> as document</li>
+<li><a href="https://pnpm.io/workspaces">PNPM</a> as workspace manager and package manager.</li>
+<li><a href="https://vitest.dev/">Vitest</a> as a test runner.</li>
+<li><a href="https://github.com/ai/size-limit">Size Limit</a> as a size limit plugin.</li>
+<li><a href="https://prettier.io/">Prettier</a> as a code formatter.</li>
+<li><a href="https://eslint.org/">ESLint</a> as a code linter.</li>
+<li><a href="https://nx.dev">NX</a> as cacheable operations.</li>
+<li><a href="https://github.com/changesets/changesets/">Changesets</a> as a way to manage changes and releases.</li>
+<li><a href="https://www.npmjs.com/package/c8">c8</a> as coverage</li>
+<li><a href="https://www.npmjs.com/package/supertest">supertest</a> as server test</li>
+<li><a href="https://www.cypress.io/">cypress</a> as e2e test</li>
+</ul>
+</blockquote>
 <p>运行TS的4个（已讲过）</p>
 <ol>
 <li>tsup</li>
@@ -4706,7 +4709,7 @@ packages/
 <li>Prettier</li>
 <li>Changesets</li>
 </ol>
-<p>其中ESLint和Prettier前端同学都熟悉，这里就细讲了。</p>
+<p>其中ESLint和Prettier前端同学都熟悉，这里就不细讲了。</p>
 <ul>
 <li>ESLint是一个用于JavaScript和JSX代码的静态代码分析工具。它可以帮助开发者在编写代码的过程中发现并修复潜在的问题，以确保代码的质量和一致性。</li>
 <li>Prettier是一个代码格式化工具，用于自动格式化代码以保持一致的代码风格。它支持多种编程语言，包括JavaScript、CSS、HTML、JSON等。Prettier可以帮助开发者快速、准确地格式化代码，提高代码的可读性和可维护性。它可以与其他代码检查工具（如ESLint）配合使用，以确保代码的质量和一致性。</li>
@@ -4732,20 +4735,20 @@ packages/
 <p>还有一些其他特性</p>
 <p><img src="6/img/Untitled%203.png" alt="Untitled" /></p>
 <p>pnpm使用的是npm version 2.x类似的树形结构，同时使用.pnpm 以平铺的形式储存着所有的包。这里的.pnpm为虚拟存储目录，该目录通过<code>&lt;package-name&gt;@&lt;version&gt;</code>来实现相同模块不同版本之间隔离和复用，由于它只会根据项目中的依赖生成，并不存在提升，所以它不会存在之前提到的<strong>Phantom dependencies</strong>问题！</p>
-<p>然后使用Store + Links和文件资源进行关联。简单说pnpm把会包下载到一个公共目录，如果某个依赖在 store 目录中存在了话，那么就会直接从 store 目录里面去 hard-link，避免了二次安装带来的时间消耗，如果依赖在 store 目录里面不存在的话，就会去下载一次。</p>
+<p>然后使用Store + Links和文件资源进行关联。简单说pnpm会把包下载到一个公共目录，如果某个依赖在 store 目录中存在了话，那么就会直接从 store 目录里面去 hard-link，避免了二次安装带来的时间消耗，如果依赖在 store 目录里面不存在的话，就会去下载一次。</p>
 <p>通过Store + hard link的方式，不仅解决了项目中的NPM doppelgangers问题，项目之间也不存在该问题，从而完美解决了npm3+和yarn中的包重复问题！</p>
 <p><img src="6/img/Untitled%204.png" alt="Untitled" /></p>
 <p>pnpm除了安装速度快，节省磁盘空间，避免幽灵依赖等优化，也内置了对monorepo的支持。使用起来比较简单，在项目根目录中新建pnpm-workspace.yaml文件，并声明对应的工作区就好。</p>
-<pre><code class="language-tsx">$ cat pnpm-workspace.yaml
+<pre><code class="language-bash">$ cat pnpm-workspace.yaml
 packages:
   - 'example'
   - 'packages/*'
 
 </code></pre>
 <p>剩下的就是运行时处理。之前nx run-many解决了monorepo子模块运行的问题。很多时候我们需要在根目录执行某个项目 的构建脚本，需要通过—filter或-F过滤之后，再执行，示例如下。</p>
-<pre><code class="language-tsx">$ pnpm -F example dev
+<pre><code class="language-bash">$ pnpm -F example dev
 </code></pre>
-<p>以上都是pnpm的有点，其实pnpm的演进还是比较快的，比如pnpm v7和pnpm v8版本差异还是比较大的，且不完全兼容。但整个社区是比较活跃的，</p>
+<p>以上都是pnpm的优点，其实pnpm的演进还是比较快的，比如pnpm v7和pnpm v8版本差异还是比较大的，且不完全兼容。但整个社区是比较活跃的，</p>
 <aside>
 💡 都说Node.js和前端复杂，其实是背后工程复杂度导致的，如果没有这么多依赖，这么多版本，也不会出现幻影依赖这样的问题。其实，对用的人来说无感的，我就用pnpm v8，像其他社区一样，也没问题的。真正的问题是Node.js和前端变化太快，你在较短时间内，总可能会遇到pnpm v7的代码，甚至互相切换。
 </aside>
@@ -4766,7 +4769,7 @@ packages:
 <p>如果我们想要从请求开始来测试node服务接口返回的数据是否正常，也就是说进行一个整体性测试，那么 superTest 就是一个非常好的选择。superTest可以帮助我们去请求本地 koa 或者 express这类web框架所编写的路由接口，而且对接口返回的状态码、数据等进行断言校验。</p>
 <p>它本身不依赖任何测试框架，所以我们可以直接把它丢到mocha的测试用例中执行：</p>
 <p>先写一个简单的Koa的Hello world。见app.js</p>
-<pre><code class="language-tsx">import Koa from &quot;koa&quot;;
+<pre><code class="language-js">import Koa from &quot;koa&quot;;
 const app = new Koa();
 
 // response
@@ -4777,12 +4780,12 @@ app.use((ctx) =&gt; {
 export default app;
 </code></pre>
 <p>再写一个测试脚本，run.js</p>
-<pre><code class="language-tsx">import app from &quot;./index.js&quot;;
+<pre><code class="language-js">import app from &quot;./index.js&quot;;
 
 app.listen(3000);
 </code></pre>
 <p>此时，执行node run.js就可以启动服务了。然后我们看一下测试如何编写。</p>
-<pre><code class="language-tsx">import { expect, test } from &quot;vitest&quot;;
+<pre><code class="language-js">import { expect, test } from &quot;vitest&quot;;
 import supertest from &quot;supertest&quot;;
 import app from &quot;./index.js&quot;;
 
@@ -4795,7 +4798,7 @@ test(&quot;koa app&quot;, async () =&gt; {
 });
 </code></pre>
 <p>这个代码和我们在Node.js v20的test runner里几乎是一模一样的。通过下面命令即可运行测试。</p>
-<pre><code class="language-tsx">$ npx vitest run
+<pre><code class="language-bash">$ npx vitest run
 
  RUN  v0.34.6 /Users/alfred/workspace/npmstudy/vitest-with-supertest
 
@@ -4814,10 +4817,10 @@ test(&quot;koa app&quot;, async () =&gt; {
 </ul>
 <h2 id="cypress"><a class="header" href="#cypress">Cypress</a></h2>
 <p>安装</p>
-<pre><code class="language-tsx">$ npm install cypress --save-dev --registry=https://registry.npmmirror.com
+<pre><code class="language-bash">$ npm install cypress --save-dev --registry=https://registry.npmmirror.com
 </code></pre>
 <p>通过npx cypress open打开。</p>
-<pre><code class="language-tsx">$ npx cypress open
+<pre><code class="language-bash">$ npx cypress open
 It looks like this is your first time using Cypress: 13.3.0
 
 ✔  Verified Cypress! /Users/alfred/Library/Caches/Cypress/13.3.0/Cypress.app
@@ -4831,7 +4834,7 @@ DevTools listening on ws://127.0.0.1:54097/devtools/browser/dc560ea2-0aad-47a4-9
 <p><img src="6/img/Untitled%207.png" alt="Untitled" /></p>
 <p><img src="6/img/Untitled%208.png" alt="Untitled" /></p>
 <p>修改代码，手动执行node run.js启动服务。</p>
-<pre><code class="language-tsx">describe(&quot;template spec&quot;, () =&gt; {
+<pre><code class="language-js">describe(&quot;template spec&quot;, () =&gt; {
   it(&quot;passes&quot;, () =&gt; {
     cy.visit(&quot;http://127.0.0.1:3000&quot;);
     cy.contains(&quot;Hello Koa&quot;);
@@ -4840,7 +4843,7 @@ DevTools listening on ws://127.0.0.1:54097/devtools/browser/dc560ea2-0aad-47a4-9
 </code></pre>
 <p><img src="6/img/Untitled%209.png" alt="Untitled" /></p>
 <p>为了简化操作，我们把启动服务放到cypress.config.js里。</p>
-<pre><code class="language-tsx">import { defineConfig } from &quot;cypress&quot;;
+<pre><code class="language-js">import { defineConfig } from &quot;cypress&quot;;
 import app from &quot;./index.js&quot;;
 export default defineConfig({
   e2e: {
@@ -4855,7 +4858,7 @@ export default defineConfig({
 });
 </code></pre>
 <p>此时，执行结果如下。</p>
-<pre><code class="language-tsx">$ npx cypress run
+<pre><code class="language-bash">$ npx cypress run
 
 DevTools listening on ws://127.0.0.1:61755/devtools/browser/0a2f2716-10cb-49b9-a2c9-5163469574e9
 
@@ -4949,7 +4952,7 @@ DevTools listening on ws://127.0.0.1:61755/devtools/browser/0a2f2716-10cb-49b9-a
 <li>如果需要查看当前子项目依赖的图，可以使用命令：<code>npx nx graph</code></li>
 </ul>
 <p>比如依赖如下。</p>
-<pre><code class="language-tsx">$ pnpm project-graph
+<pre><code class="language-bash">$ pnpm project-graph
 
 &gt; your-node-v20-monorepo-project@ project-graph /Users/alfred/workspace/npmstudy/your-node-v20-monorepo-project
 &gt; nx graph
@@ -4959,11 +4962,15 @@ DevTools listening on ws://127.0.0.1:61755/devtools/browser/0a2f2716-10cb-49b9-a
 <p><img src="6/img/Untitled%2014.png" alt="Untitled" /></p>
 <p>nx除了本地换成，其实还支持云服务（remote cache）。即nx.app，如果真的对ci/cd有极强的需求，其实也是可以考虑选择的。</p>
 <p><img src="6/img/Untitled%2015.png" alt="Untitled" /></p>
-<p>在<a href="https://github.com/npmstudy/your-node-v20-monorepo-project">https://github.com/npmstudy/your-node-v20-monorepo-project</a> 项目里，我们其实只用了非常简单的npm nx run-many</p>
-<pre><code class="language-tsx">   &quot;build&quot;: &quot;nx run-many -t build&quot;,
+<p>在<a href="https://github.com/npmstudy/your-node-v20-monoreopo-project">https://github.com/npmstudy/your-node-v20-monoreopo-project</a> 项目里，我们其实只用了非常简单的npm nx run-many</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;nx run-many -t build&quot;,
     &quot;build:fast&quot;: &quot;nx run-many -t build:fast&quot;,
     &quot;dev&quot;: &quot;nx run-many -t dev&quot;,
     &quot;test&quot;: &quot;nx run-many -t test&quot;,
+  }
+}
 </code></pre>
 <p>虽然多了一个nx模块，但执行的时候能够利用本地缓存，加快打包、测试速度，已经是非常好的事儿。</p>
 <h2 id="changesets"><a class="header" href="#changesets">Changesets</a></h2>
@@ -4986,7 +4993,7 @@ DevTools listening on ws://127.0.0.1:61755/devtools/browser/0a2f2716-10cb-49b9-a
 <p>我所总结的4t（tsx、tsup、tsdoc、tsd），其实都是我在各种开源项目里学的，我会养成一个习惯，看到一个好的项目，首先看package.json，除了依赖包，还有构建相关，都是技巧。</p>
 <p>开源是我学习的最好的途径。如果不懂，还可以去提issue，再后面就可以自己创造一些更有趣项目。</p>
 <p>我之所以了解tsd，是因为阅读fastify源码，翻它的package.json：<a href="https://github.com/fastify/fastify/blob/main/package.json#L184">https://github.com/fastify/fastify/blob/main/package.json#L184</a>。</p>
-<p>其实还有更加轻量级的<a href="https://github.com/mrazauskas/tsd-lite%EF%BC%8C%E6%88%91%E6%98%AF%E5%9C%A8%E7%BF%BBjest%E4%B8%ADexpect%E6%A8%A1%E5%9D%97%E7%9A%84%E6%97%B6%E5%80%99%E6%89%BE%E8%A7%81%E7%9A%84%EF%BC%8C%E5%9C%B0%E5%9D%80%5Bhttps://github.com/jestjs/jest/blob/main/packages/expect/package.json">https://github.com/mrazauskas/tsd-lite，我是在翻jest中expect模块的时候找见的，地址[https://github.com/jestjs/jest/blob/main/packages/expect/package.json</a>](<a href="https://github.com/jestjs/jest/blob/main/packages/expect/package.json)%E3%80%82">https://github.com/jestjs/jest/blob/main/packages/expect/package.json)。</a></p>
+<p>其实还有更加轻量级的<a href="https://github.com/mrazauskas/tsd-lite">https://github.com/mrazauskas/tsd-lite</a>，我是在翻jest中expect模块的时候找见的，地址<a href="https://github.com/jestjs/jest/blob/main/packages/expect/package.json">https://github.com/jestjs/jest/blob/main/packages/expect/package.json</a>。</p>
 <p>另外，《开放式协作:开源软件的生产与维护》也是不错的，值得一读。</p>
 <h2 id="刻意练习"><a class="header" href="#刻意练习">刻意练习</a></h2>
 <p>我认同这本书的观点</p>
