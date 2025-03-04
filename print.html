@@ -3763,7 +3763,7 @@ For help, see: https://nodejs.org/en/docs/inspector
 </tbody></table>
 </div>
 <p>在Node.js v18开始内置了测试框架，在Node.js v20版本中，已经被标记为Stable能力，大家可以放心使用。</p>
-<pre><code class="language-bash">import {test, describe} from 'node:test';
+<pre><code class="language-js">import {test, describe} from 'node:test';
 import assert from 'node:assert';
 
 import { HelloWorld } from &quot;./helloworld.mjs&quot;;
@@ -3788,7 +3788,7 @@ describe(&quot;test suite&quot;, function() {
 <h2 id="使用tsd类型测试"><a class="header" href="#使用tsd类型测试">使用Tsd类型测试</a></h2>
 <p>写了类型，最好写好类型测试，在ts生态里，可以使用tsd来做类型测试。</p>
 <p>创建index.test-d.ts文件</p>
-<pre><code class="language-bash">import { expectType } from &quot;tsd&quot;;
+<pre><code class="language-ts">import { expectType } from &quot;tsd&quot;;
 
 import { IPerson } from &quot;.&quot;;
 import { HelloWorld } from &quot;./src/helloworld&quot;;
@@ -3810,7 +3810,7 @@ expectType&lt;Promise&lt;void&gt;&gt;(cli.sayHi(&quot;use TypeScript to write No
 <p>如果想规范的写，就会比较麻烦一点。如果什么都不写，也没啥问题，只是不标准而已。像Rails这种追求极致效率，又想标准的项目，不用ts是正常的。</p>
 <h2 id="添加ts测试"><a class="header" href="#添加ts测试">添加TS测试</a></h2>
 <p>这样的描述被称作 <strong>规范（specification, spec）</strong>，包含用例的描述以及针对它们的测试，如下所示：</p>
-<pre><code class="language-bash">import { it, describe } from &quot;node:test&quot;;
+<pre><code class="language-js">import { it, describe } from &quot;node:test&quot;;
 import assert from &quot;node:assert&quot;;
 
 import { HelloWorld } from &quot;../src/helloworld&quot;;
@@ -3835,9 +3835,9 @@ describe(&quot;test suite&quot;, function () {
 });
 </code></pre>
 <p>正如你所看到的，一个规范包含三个主要的模块：</p>
-<p>1、**<code>describe(&quot;title&quot;, function() { ... })</code>**表示我们正在描述的功能是什么，相当于一个group。用于组织“工人（workers）” —— <code>it</code> 代码块。</p>
-<p>2、<strong><code>it(&quot;use case description&quot;, function() { ... })**it</code> 里面的描述部分，我们以一种</strong>易于理解** 的方式描述特定的用例，第二个参数是用于对其进行测试的函数。表示这是&quot;一系列测试&quot;中的一项，相当于item，如何测试？测试逻辑？都是在it的回调函数中实现的</p>
-<p>3、**<code>assert.equal(value1, value2)**it</code> 块中的代码，如果实现是正确的，它应该在执行的时候不产生任何错误。
+<p>1、<strong><code>describe(&quot;title&quot;, function() { ... })</code></strong> 表示我们正在描述的功能是什么，相当于一个group。用于组织“工人（workers）” —— <code>it</code> 代码块。</p>
+<p>2、<strong><code>it(&quot;use case description&quot;, function() { ... })</code></strong> <code>it</code> 里面的描述部分，我们以一种<strong>易于理解</strong> 的方式描述特定的用例，第二个参数是用于对其进行测试的函数。表示这是&quot;一系列测试&quot;中的一项，相当于item，如何测试？测试逻辑？都是在it的回调函数中实现的</p>
+<p>3、<strong><code>assert.equal(value1, value2)</code></strong> <code>it</code> 块中的代码，如果实现是正确的，它应该在执行的时候不产生任何错误。
 <code>assert.*</code> 函数用于检查 测试 函数是否按照预期工作。在这里我们使用了其中之一 —— <code>assert.equal</code>，它会对参数进行比较，如果它们不相等则会抛出一个错误。这里它检查了 <code>pow(2, 3)</code> 的值是否等于 <code>8</code>。还有其他类型的比较和检查，我们将在后面介绍到。</p>
 <p>规范可以被执行，它将运行在 <code>it</code> 块中指定的测试。我们稍后会看到。</p>
 <p>开发流程通常看起来像这样：</p>
@@ -3855,7 +3855,7 @@ describe(&quot;test suite&quot;, function () {
 <p>在我们的案例中，第一步已经完成了：我们有一个针对 helloworld 的初始规范。因此让我们来实现它吧。但在此之前，让我们用一些 JavaScript 库来运行测试，就是看看测试是通过了还是失败了。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="常用测试技巧进阶"><a class="header" href="#常用测试技巧进阶">常用测试技巧进阶</a></h1>
 <h2 id="同步和异步"><a class="header" href="#同步和异步">同步和异步</a></h2>
-<pre><code class="language-tsx">
+<pre><code class="language-js">
 describe(&quot;test suite&quot;, function () {
   it.only(&quot;test if works correctly&quot;, async function (t) {
 
@@ -3869,8 +3869,8 @@ test('callback passing test', (t, done) =&gt; {
 });
 </code></pre>
 <h2 id="常用技巧"><a class="header" href="#常用技巧">常用技巧</a></h2>
-<p>Exclusive &amp;&amp; Inclusive其实很好理解，分别对应only和skip函数。这是只有写的test case比较多的时候才会用的简单技巧。(下面代码时正常写法，但在Node.js v20也是直接运行)</p>
-<pre><code class="language-tsx">import { it, describe } from &quot;node:test&quot;;
+<p>Exclusive &amp;&amp; Inclusive其实很好理解，分别对应only和skip函数。这是只有写的test case比较多的时候才会用的简单技巧。(下面代码是正常写法，但在Node.js v20也是直接运行)</p>
+<pre><code class="language-js">import { it, describe } from &quot;node:test&quot;;
 import assert from &quot;node:assert&quot;;
 
 import { HelloWorld } from &quot;../src/helloworld&quot;;
@@ -3898,7 +3898,7 @@ describe(&quot;test suite&quot;, function () {
 <p>上面的代码只会有一个test complete， 只有only的会被执行，另一个会被忽略掉。每个函数里只能有一个only。如果是it.skip ，那么该case就会被忽略。only和skip共用没有什么实际意义，因为only的作用会把skip屏蔽掉。</p>
 <p>实际上，Node.js v20里没有按照常规的写法，而是采用了配置参数结合cli的方式。</p>
 <p>skip</p>
-<pre><code class="language-tsx">// The skip option is used, but no message is provided.
+<pre><code class="language-js">// The skip option is used, but no message is provided.
 test('skip option', { skip: true }, (t) =&gt; {
   // This code is never executed.
 });
@@ -3919,7 +3919,7 @@ test('skip() method with message', (t) =&gt; {
 });
 </code></pre>
 <p>only</p>
-<pre><code class="language-tsx">// Assume Node.js is run with the --test-only command-line option.
+<pre><code class="language-js">// Assume Node.js is run with the --test-only command-line option.
 // The 'only' option is set, so this test is run.
 test('this test is run', { only: true }, async (t) =&gt; {
   // Within this test, all subtests are run by default.
@@ -3947,10 +3947,10 @@ test('this test is not run', () =&gt; {
 </code></pre>
 <p>参考API文档<a href="https://nodejs.org/api/test.html#testskipname-options-fn">https://nodejs.org/api/test.html#testskipname-options-fn</a></p>
 <p><img src="5/img/Untitled%201.png" alt="Untitled" /></p>
-<p>有意思的是它竟然加了**<code>todo</code>**这个测试，是一个TODO的简写。</p>
+<p>有意思的是它竟然加了 <strong><code>todo</code></strong> 这个测试，是一个TODO的简写。</p>
 <h2 id="生命周期"><a class="header" href="#生命周期">生命周期</a></h2>
 <p>细心的读者应该发现了我们每次在单元测试开始和结束前都需要做一些准备工作，要么是stub函数，要么是准备mock数据。测试框架提供了四个生命周期钩子，我们可以把一些可以复用的准备工作放到钩子中去：</p>
-<pre><code class="language-tsx">describe('test', function() {
+<pre><code class="language-js">describe('test', function() {
   // 在本测试块的所有测试用例之前执行且仅执行一次
   before(function() {
 
@@ -3977,9 +3977,9 @@ test('this test is not run', () =&gt; {
 </code></pre>
 <p>在下一章节中，我们在写一个Http Server测试的时候就会用到该知识点，需要在before里先启动服务，然后再去跑测试用例。</p>
 <h2 id="tdd-vs-bdd"><a class="header" href="#tdd-vs-bdd">TDD vs BDD</a></h2>
-<p>BDD（Behaviour Driven Development）是TDD的一种， 倾向于断言被测对象的行为特征而非输入输出。 <a href="http://chaijs.com/">Chai</a>的BDD风格断言库包括两部分：<code>expect</code>和<code>should</code>。=</p>
+<p>BDD（Behaviour Driven Development）是TDD的一种， 倾向于断言被测对象的行为特征而非输入输出。 <a href="http://chaijs.com/">Chai</a>的BDD风格断言库包括两部分：<code>expect</code>和<code>should</code>。</p>
 <p>前面所讲的describe, it, before, after等都属于BDD的范畴，对于TDD，Mocha、Ava等测试库都用suite, test, setup, teardown。</p>
-<pre><code class="language-tsx">suite 'Array', !-&gt;
+<pre><code class="language-bash">suite 'Array', !-&gt;
     setup !-&gt;
         console.log 'setup'
     teardown !-&gt;
@@ -4010,14 +4010,14 @@ test('this test is not run', () =&gt; {
 <h2 id="spy--mock--stub"><a class="header" href="#spy--mock--stub">Spy &amp; Mock &amp; Stub</a></h2>
 <p>在软件测试中，stub、mock 和 spy 是三种用于模拟和测试依赖关系的技术。</p>
 <ul>
-<li>Stub **（插桩）**是一种用于在测试过程中替换外部依赖的技术。它的目的是为了在测试中提供所需的输入，并阻止实际的依赖代码被执行。这样，就可以对代码进行单元测试，而无需考虑外部依赖的影响。</li>
-<li>Mock **（伪造）**是一种用于在测试过程中模拟依赖关系的技术。它的目的是为了测试代码的行为，而不是实际的结果。通常，mock 会跟踪依赖代码的调用次数和参数，并根据预期的行为给出响应。</li>
-<li>Spy（<strong>间谍</strong>） 是一种用于在测试过程中监视依赖关系的技术。它的目的是为了测试依赖代码的实际行为，而不仅仅是它的返回值。通常，spy 会跟踪依赖代码的调用次数和参数，并记录下实际执行的行为。</li>
+<li>Stub <strong>（插桩）</strong> 是一种用于在测试过程中替换外部依赖的技术。它的目的是为了在测试中提供所需的输入，并阻止实际的依赖代码被执行。这样，就可以对代码进行单元测试，而无需考虑外部依赖的影响。</li>
+<li>Mock <strong>（伪造）</strong> 是一种用于在测试过程中模拟依赖关系的技术。它的目的是为了测试代码的行为，而不是实际的结果。通常，mock 会跟踪依赖代码的调用次数和参数，并根据预期的行为给出响应。</li>
+<li>Spy <strong>（间谍）</strong> 是一种用于在测试过程中监视依赖关系的技术。它的目的是为了测试依赖代码的实际行为，而不仅仅是它的返回值。通常，spy 会跟踪依赖代码的调用次数和参数，并记录下实际执行的行为。</li>
 </ul>
 <p>总的来说，stub 和 mock 的目的都是为了在测试中替换依赖关系，但是 mock 更加强调对代码行为的测试，而 stub 更加强调提供测试所需的输入。相比之下，spy 的目的是为了监视依赖关系的。</p>
 <p>在Node.js v20中，stub和spy都可以通过mock来实现。</p>
 <p>1、mock示例</p>
-<pre><code class="language-tsx">'use strict';
+<pre><code class="language-js">'use strict';
 const assert = require('node:assert');
 const { mock, test } = require('node:test');
 
@@ -4040,7 +4040,7 @@ test('spies on a function', () =&gt; {
 });
 </code></pre>
 <p>2、spy示例</p>
-<pre><code class="language-tsx">import {
+<pre><code class="language-js">import {
   describe,
   it,
   mock
@@ -4066,7 +4066,7 @@ describe('Spies Test Suite', () =&gt; {
 })
 </code></pre>
 <p>3、stub示例</p>
-<pre><code class="language-tsx">import {
+<pre><code class="language-js">import {
   describe,
   it,
   beforeEach,
@@ -4200,7 +4200,7 @@ jobs:
 }
 </code></pre>
 <p>增加配置.c8rc.json，注意配置中的reporter里的lcov是必须配置的。</p>
-<pre><code class="language-bash">{
+<pre><code class="language-json">{
   &quot;reporter&quot;: [
     &quot;lcov&quot;,
     &quot;text&quot;,
@@ -4214,7 +4214,7 @@ jobs:
 <p><img src="5/img/Untitled%208.png" alt="Untitled" /></p>
 <p>测试覆盖率是保证测试有效的必备手段。</p>
 <p>还是以之前的代码举例</p>
-<pre><code class="language-bash">import { IPerson } from &quot;..&quot;;
+<pre><code class="language-ts">import { IPerson } from &quot;..&quot;;
 
 export class HelloWorld implements IPerson {
   async sayHi(name: string): Promise&lt;void&gt; {
@@ -4235,7 +4235,7 @@ export class HelloWorld implements IPerson {
 }
 </code></pre>
 <p>如果只是测试sayHi，代码如下。</p>
-<pre><code class="language-bash">import { test, describe } from &quot;node:test&quot;;
+<pre><code class="language-js">import { test, describe } from &quot;node:test&quot;;
 import assert from &quot;node:assert&quot;;
 
 import { HelloWorld } from &quot;../src/helloworld&quot;;
@@ -4284,7 +4284,7 @@ All files      |   89.47 |    83.33 |     100 |   89.47 |
 <p><img src="5/img/Untitled%209.png" alt="Untitled" /></p>
 <p>非常明显是helloworld中的else逻辑没有覆盖。</p>
 <p>修改测试代码，增加下面的代码。</p>
-<pre><code class="language-bash">test(&quot;test if works incorrectly&quot;, async function () {
+<pre><code class="language-js">test(&quot;test if works incorrectly&quot;, async function () {
   const cli: IPerson = new HelloWorld();
   assert.rejects(async () =&gt; await cli.sayHi(), new Error(&quot;fail&quot;));
 });
@@ -4296,7 +4296,7 @@ All files      |   89.47 |    83.33 |     100 |   89.47 |
 <p><img src="5/img/Untitled%2010.png" alt="Untitled" /></p>
 <p>示例1：测试通过</p>
 <p><img src="5/img/Untitled%2011.png" alt="Untitled" /></p>
-<pre><code class="language-tsx">![build status](https://github.com/npmstudy/your-first-nodejs-helloworld-with-ts/actions/workflows/main.yml/badge.svg)
+<pre><code class="language-md">![build status](https://github.com/npmstudy/your-first-nodejs-helloworld-with-ts/actions/workflows/main.yml/badge.svg)
 </code></pre>
 <p>示例1：测试覆盖率</p>
 <p><img src="5/img/Untitled%2012.png" alt="Untitled" /></p>
@@ -4305,7 +4305,7 @@ All files      |   89.47 |    83.33 |     100 |   89.47 |
 📢 课后练习：自己通过github actions，在每次main分支被合并之后自动发npm包。
 </aside>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="小结-4"><a class="header" href="#小结-4">小结</a></h1>
-<p>本章节主要讲解测试技巧，ts测试除了比js测试多了类型测试外，其他都是一样的。这里主要Node.js内置的test runner，在不增加模块的前提下就可以搞定，相对来说更简单，对未来Node.js v20这一测试潮流能掌握也是好的。</p>
+<p>本章节主要讲解测试技巧，ts测试除了比js测试多了类型测试外，其他都是一样的。这里主要使用Node.js内置的test runner，在不增加模块的前提下就可以搞定，相对来说更简单，对未来Node.js v20这一测试潮流能掌握也是好的。</p>
 <p>至于高级测试技巧和CI/CD，能掌握多少掌握多少，毕竟测试是高阶技巧，而spy、mock这些又是高阶中的高级技巧，不必强求必须掌握。</p>
 <p>如果能掌握更好，对理解开源项目，自己学习是多有裨益的。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="6monorepo多模块开发实践"><a class="header" href="#6monorepo多模块开发实践">6、Monorepo多模块开发实践</a></h1>
